@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<StackPane xmlns:fx="http://javafx.com/fxml"
+           fx:controller="com.example.projet.Controller.LoginController"
+           prefWidth="600" prefHeight="400"
+           style="-fx-background-color: black;">
+
+  <VBox spacing="15" alignment="CENTER"
+        style="-fx-background-color: white; -fx-padding: 30px; -fx-background-radius: 10px;"
+        maxWidth="400" maxHeight="450">
+
+    <Label text="Connexion" style="-fx-font-size: 24px; -fx-text-fill: black; -fx-font-weight: bold;"/>
+
+    <TextField fx:id="username" promptText="Nom d'utilisateur"
+               style="-fx-font-size: 14px; -fx-pref-width: 250px;"/>
+
+    <PasswordField fx:id="password" promptText="Mot de passe"
+                   style="-fx-font-size: 14px; -fx-pref-width: 250px;"/>
+
+    <Button fx:id="loginButton" text="Se connecter" onAction="#handleLogin"
+            style="-fx-background-color: black; -fx-text-fill: white; -fx-font-size: 14px; -fx-pref-width: 250px;"/>
+
+    <Label fx:id="messageLabel" text=""
+           style="-fx-text-fill: black; -fx-font-size: 14px;"/>
+
+    <Hyperlink text="Vous n'avez pas de compte ? S'inscrire"
+               fx:id="registerLink"
+               onAction="#onRegisterLinkClicked"
+               style="-fx-font-size: 12px;"/>
+  </VBox>
+
+</StackPane>
+

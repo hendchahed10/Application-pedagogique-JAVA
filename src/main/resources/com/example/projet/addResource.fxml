@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.example.projet.Controller.AddResourceController"
+      stylesheets="@style.css">
+
+    <Label text="Ajout Ressources" style="-fx-font-size: 20px;"/>
+
+    <TextField fx:id="titreField" promptText="Titre" maxWidth="300"/>
+
+    <TextArea fx:id="descriptionField" promptText="Description" maxWidth="300" prefRowCount="3"/>
+
+    <Label text="Niveau de difficulté :" />
+    <HBox spacing="10" alignment="CENTER">
+        <RadioButton fx:id="facileRadio" text="Facile"/>
+        <RadioButton fx:id="moyenneRadio" text="Moyenne"/>
+        <RadioButton fx:id="difficileRadio" text="Difficile"/>
+    </HBox>
+
+    <Button text="Choisir un fichier" onAction="#handleFileUpload"/>
+    <Label fx:id="fileLabel" text="Aucun fichier sélectionné" wrapText="true" maxWidth="300"/>
+
+    <Button text="Publier" onAction="#handlePublier"/>
+
+</VBox>
+

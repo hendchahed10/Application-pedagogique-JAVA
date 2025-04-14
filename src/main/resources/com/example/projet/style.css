@@ -1,0 +1,131 @@
+/* Style pour la racine de l'application */
+.root {
+    -fx-padding: 30;
+    -fx-background-color: linear-gradient(to bottom, #f0f8ff, #d6eaf8);
+    -fx-alignment: center;
+}
+
+/* Style pour les champs de texte et les champs de mot de passe */
+.text-field, .password-field {
+    -fx-font-size: 14px;
+    -fx-pref-width: 220px;
+    -fx-padding: 5;
+}
+
+/* Style pour les boutons généraux */
+.button, .publishButton {
+    -fx-background-color: #4CAF50;
+    -fx-text-fill: white;
+    -fx-font-size: 16px;
+    -fx-padding: 10px 20px;
+    -fx-border-radius: 5px;
+    -fx-cursor: hand;
+}
+
+.button:hover {
+    -fx-background-color: #45a049;
+}
+
+/* Style pour les boutons d'ajout */
+.add-button {
+    -fx-background-radius: 50%;
+    -fx-min-width: 40px;
+    -fx-min-height: 40px;
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-background-color: #4CAF50;
+    -fx-text-fill: white;
+}
+
+/* Style pour les labels */
+.label {
+    -fx-font-size: 14px;
+    -fx-text-fill: green;
+}
+
+/* Styles spécifiques pour les titres et sous-titres */
+.title {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #333;
+}
+
+.subtitle {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #555;
+    -fx-padding: 10px 0;
+}
+
+/* Numéro de grande taille */
+.big-number {
+    -fx-font-size: 40px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #4CAF50;
+}
+
+/* Style global pour la BorderPane */
+.BorderPane {
+    -fx-background-color: #f4f4f9;
+}
+
+/* Styles pour les HBox */
+.HBox {
+    -fx-spacing: 10px;
+}
+
+/* Style pour les boutons de modification et suppression */
+.Button {
+    -fx-background-color: #007bff;
+    -fx-text-fill: white;
+    -fx-padding: 5px 10px;
+    -fx-font-size: 14px;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+}
+
+.Button:hover {
+    -fx-background-color: #0056b3;
+}
+
+/* Style pour les labels avec texte spécifique */
+.Label[style='-fx-font-size: 16px;'] {
+    -fx-text-fill: #ff9800;
+}
+
+/* Style pour les VBox avec la classe "center" */
+.center VBox {
+    -fx-background-color: #ffffff;
+    -fx-padding: 20px;
+    -fx-spacing: 15px;
+    -fx-border-radius: 10px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.1), 10, 0, 0, 5);
+}
+
+/* Style pour les TextField */
+.textfield {
+    -fx-background-color: #f0f0f0;
+    -fx-border-color: #cccccc;
+    -fx-padding: 10;
+    -fx-font-size: 14px;
+}
+
+/* Style pour les TextArea */
+.textarea {
+    -fx-background-color: #f0f0f0;
+    -fx-border-color: #cccccc;
+    -fx-padding: 10;
+    -fx-font-size: 14px;
+}
+
+/* Style pour les RadioButtons */
+.radioButton {
+    -fx-font-size: 14px;
+    -fx-text-fill: #333333;
+}
+
+/* Style pour la Label du fichier */
+.fileLabel {
+    -fx-text-fill: #888888;
+    -fx-font-size: 14px;
+}

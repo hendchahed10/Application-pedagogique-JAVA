@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.control.Label?>
+
+<StackPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.projet.Controller.AcceuilController"
+           fx:id="rootPane" prefWidth="600" prefHeight="400" style="-fx-background-color: black;">
+
+    <AnchorPane>
+        <Button fx:id="signInButton" text="Sign In" onAction="#goToLogin"
+                style="-fx-background-color: transparent; -fx-text-fill: white; -fx-border-color: white; -fx-border-width: 2px; -fx-font-size: 14px; -fx-padding: 8px 16px;"
+                AnchorPane.topAnchor="20.0" AnchorPane.rightAnchor="20.0" />
+    </AnchorPane>
+
+    <StackPane mouseTransparent="true">
+        <Label fx:id="welcomeLabel" text="Bienvenue sur votre plateforme pédagogique"
+               style="-fx-font-size: 36px; -fx-font-weight: bold; -fx-text-fill: white;" />
+    </StackPane>
+
+
+</StackPane>
+
+
+
