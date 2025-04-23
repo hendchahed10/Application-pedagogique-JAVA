@@ -1,85 +1,68 @@
 package com.example.projet.Controller;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.stage.FileChooser;
-import javafx.stage.Stage;
 import java.io.File;
 
-public class AddResourceController {
-
+public class AddResourceController{
     @FXML
     private TextField titreField;
+    @FXML
+    private TextArea descriptionArea;
+    @FXML
+    private RadioButton facileRadio, moyenneRadio, difficileRadio;
+    @FXML
+    private Button uploadButton, publierButton;
+    private File fichierSelectionne;
 
     @FXML
-    private TextArea descriptionField;
+    public void initialize() {
+        uploadButton.setOnAction(event -> choisirFichier());
+        publierButton.setOnAction(event -> publierRessource());
+    }
 
-    @FXML
-    private RadioButton facileRadio;
-
-    @FXML
-    private RadioButton moyenneRadio;
-
-    @FXML
-    private RadioButton difficileRadio;
-
-    @FXML
-    private Label fileLabel;
-
-    private File selectedFile;
-
-    @FXML
-    private void handleFileUpload() {
+    private void choisirFichier() {
         FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Choisir un fichier");
-        selectedFile = fileChooser.showOpenDialog(getStage());
-        if (selectedFile != null) {
-            fileLabel.setText(selectedFile.getName());
-        } else {
-            fileLabel.setText("Aucun fichier sélectionné");
+        fileChooser.setTitle("Choisir un document");
+        fichierSelectionne = fileChooser.showOpenDialog(null);
+
+        if (fichierSelectionne != null) {
+            uploadButton.setText(fichierSelectionne.getName());
         }
     }
 
-    @FXML
-    private void handlePublier(ActionEvent event) {
-        String titre = titreField.getText().trim();
-        String description = descriptionField.getText().trim();
-        String niveau = "";
+    private void publierRessource() {
+        String titre = titreField.getText();
+        String description = descriptionArea.getText();
+        String difficulte = "";
 
         if (facileRadio.isSelected()) {
-            niveau = "Facile";
+            difficulte = "Facile";
         } else if (moyenneRadio.isSelected()) {
-            niveau = "Moyenne";
+            difficulte = "Moyenne";
         } else if (difficileRadio.isSelected()) {
-            niveau = "Difficile";
+            difficulte = "Difficile";
         }
 
-        if (titre.isEmpty() || description.isEmpty() || niveau.isEmpty() || selectedFile == null) {
-            showAlert(Alert.AlertType.ERROR, "Erreur", "Veuillez remplir tous les champs.");
-            return;
+        if (titre.isEmpty() || description.isEmpty() || difficulte.isEmpty() || fichierSelectionne == null) {
+            showAlert(Alert.AlertType.ERROR, "Erreur", "Veuillez remplir tous les champs et choisir un fichier !");
+        } else {
+            // Ici tu peux ajouter ton code pour enregistrer la ressource
+            System.out.println("Titre : " + titre);
+            System.out.println("Description : " + description);
+            System.out.println("Difficulté : " + difficulte);
+            System.out.println("Fichier : " + fichierSelectionne.getAbsolutePath());
+
+            showAlert(Alert.AlertType.INFORMATION, "Succès", "Ressource publiée avec succès !");
         }
-
-        System.out.println("Titre: " + titre);
-        System.out.println("Description: " + description);
-        System.out.println("Niveau: " + niveau);
-        System.out.println("Fichier: " + selectedFile.getAbsolutePath());
-
-        showAlert(Alert.AlertType.INFORMATION, "Succès", "Ressource ajoutée avec succès !");
     }
 
-    private Stage getStage() {
-        return (Stage) titreField.getScene().getWindow();
-    }
-
-    private void showAlert(Alert.AlertType alertType, String title, String message) {
+    private void showAlert(Alert.AlertType alertType, String titre, String message) {
         Alert alert = new Alert(alertType);
-        alert.setTitle(title);
+        alert.setTitle(titre);
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
     }
 }
-
-
-

@@ -2,59 +2,45 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.projet.Controller.DashboardTeacherController"
-            stylesheets="@style.css">
+<BorderPane prefHeight="600" prefWidth="1000" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.projet.Controller.DashboardTeacherController">
 
-    <top>
-        <VBox alignment="CENTER" spacing="10">
-            <Label text="Tableau de bord enseignant" styleClass="title"/>
-            <HBox alignment="CENTER" spacing="20">
-                <VBox alignment="CENTER">
-                    <Label text="24" styleClass="big-number"/>
-                    <Label text="NB étudiants"/>
-                </VBox>
-                <VBox alignment="CENTER">
-                    <Label text="4" styleClass="big-number"/>
-                    <Label text="NB ressources"/>
-                </VBox>
-                <VBox alignment="CENTER">
-                    <Label text="3,2" styleClass="big-number"/>
-                    <Label text="Moyenne des notes"/>
-                </VBox>
-                <VBox alignment="CENTER">
-                    <Label text="18" styleClass="big-number"/>
-                    <Label text="Nombre de vues"/>
-                </VBox>
-                <Button text="+" onAction="#onAddRessourceClicked" styleClass="add-button"/>
-            </HBox>
-        </VBox>
-    </top>
-    <center>
-        <VBox spacing="10" minHeight="200" maxHeight="400" prefHeight="300" minWidth="200" maxWidth="400" prefWidth="300" >
-            <Label text="Listes des ressources créées" styleClass="subtitle"/>
-            <VBox spacing="10">
-                <HBox spacing="10" alignment="CENTER_LEFT">
-                    <Label text="ressource 1"/>
-                    <Button text="Modifier"/>
-                    <Button text="Supprimer"/>
-                    <HBox spacing="2" alignment="CENTER">
-                        <Label text="⭐" style="-fx-font-size: 16px;" />
-                    </HBox>
-                </HBox>
-                <HBox spacing="10" alignment="CENTER_LEFT">
-                    <Label text="ressource 2"/>
-                    <Button text="Modifier"/>
-                    <Button text="Supprimer"/>
-                    <HBox spacing="2" alignment="CENTER">
-                        <Label text="⭐⭐⭐⭐⭐" style="-fx-font-size: 16px;" />
-                    </HBox>
-                </HBox>
+   <center>
+      <VBox alignment="TOP_CENTER" spacing="20" style="-fx-padding:20; -fx-border-color: white; -fx-border-width: 0 0 0 1;">
+         <Label style="-fx-font-size: 24;" text="Tableau de bord étudiant" textFill="white" />
+         <HBox alignment="CENTER" spacing="30">
+            <VBox alignment="CENTER" prefHeight="80" prefWidth="150" style="-fx-background-color: lightgray; -fx-background-radius: 15;">
+               <Label fx:id="consultedLabel" style="-fx-font-size: 24; " text="80" />
+               <Label text="NB étudiants" />
             </VBox>
-        </VBox>
-    </center>
+            <VBox alignment="CENTER" prefHeight="80" prefWidth="150" style="-fx-background-color: lightgray; -fx-background-radius: 15;">
+               <Label fx:id="completedLabel" style="-fx-font-size: 24;" text="5" />
+               <Label text="NB ressources crées" />
+            </VBox>
+            <VBox alignment="CENTER" prefHeight="80" prefWidth="150" style="-fx-background-color: lightgray; -fx-background-radius: 15;">
+               <Label fx:id="savedLabel" prefHeight="50.0" prefWidth="45.0" style="-fx-font-size: 24;" text="8" />
+               <Label prefHeight="45.0" prefWidth="128.0" text=" note Moyenne des ressources ">
+                  <font>
+                     <Font size="9.0" />
+                  </font></Label>
+            </VBox>
+            <VBox alignment="CENTER" layoutX="214.0" layoutY="10.0" prefHeight="80" prefWidth="150" style="-fx-background-color: lightgray; -fx-background-radius: 15;">
+               <children>
+                  <Label fx:id="consultedLabel1" style="-fx-font-size: 24; " text="14" />
+                  <Label text=" NB vues des ressources">
+                     <font>
+                        <Font size="9.0" />
+                     </font>
+                  </Label>
+               </children>
+            </VBox>
+         </HBox>
+
+         <HBox alignment="CENTER_LEFT" spacing="10">
+            <Label text="Listes des ressources crées" textFill="white" />
+            <HBox alignment="CENTER_RIGHT" spacing="5" />
+         </HBox>
+      </VBox>
+   </center>
 </BorderPane>
-
-
-
-

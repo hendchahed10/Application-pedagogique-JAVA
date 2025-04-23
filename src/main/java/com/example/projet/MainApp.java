@@ -7,15 +7,13 @@ import javafx.stage.Stage;
 
 
 public class MainApp extends Application {
-
     private static Stage primaryStage;
-
     @Override
     public void start(Stage stage) {
         try {
             primaryStage = stage;
 
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/example/projet/acceuil.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/example/projet/dashboardStudent.fxml"));
             Scene scene = new Scene(fxmlLoader.load(), 900, 700);
             primaryStage.setTitle("Accueil");
             primaryStage.setScene(scene);
@@ -29,6 +27,16 @@ public class MainApp extends Application {
 
     public static void showLoginView() throws Exception {
         FXMLLoader fxmlLoader = new FXMLLoader(MainApp.class.getResource("/com/example/projet/login.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), 900, 700);
+        applyStylesheet(scene);
+        primaryStage.setTitle("Connexion");
+        primaryStage.setFullScreen(true);
+        primaryStage.setScene(scene);
+        primaryStage.show();
+    }
+
+    public static void showDstudent() throws Exception {
+        FXMLLoader fxmlLoader = new FXMLLoader(MainApp.class.getResource("/com/example/projet/dashboardStudent.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 900, 700);
         applyStylesheet(scene);
         primaryStage.setTitle("Connexion");

@@ -3,28 +3,26 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox xmlns="http://javafx.com/javafx"
-      xmlns:fx="http://javafx.com/fxml"
-      fx:controller="com.example.projet.Controller.AddResourceController"
-      stylesheets="@style.css">
+<BorderPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.projet.Controller.AddResourceController">
+    <center>
+        <VBox spacing="10" alignment="CENTER" padding="20">
+            <Label text="Ajout Ressources" style="-fx-font-size: 24px; -fx-font-weight: bold;" />
 
-    <Label text="Ajout Ressources" style="-fx-font-size: 20px;"/>
+            <TextField fx:id="titreField" promptText="Titre" />
+            <TextArea fx:id="descriptionArea" promptText="Description" prefRowCount="3" />
 
-    <TextField fx:id="titreField" promptText="Titre" maxWidth="300"/>
+            <Label text="Niveau de difficulté :" />
+            <HBox spacing="10">
+                <RadioButton fx:id="facileRadio" text="Facile" />
+                <RadioButton fx:id="moyenneRadio" text="Moyenne" />
+                <RadioButton fx:id="difficileRadio" text="Difficile"  />
+            </HBox>
 
-    <TextArea fx:id="descriptionField" promptText="Description" maxWidth="300" prefRowCount="3"/>
+            <Button fx:id="uploadButton" text="Télécharger Document" />
 
-    <Label text="Niveau de difficulté :" />
-    <HBox spacing="10" alignment="CENTER">
-        <RadioButton fx:id="facileRadio" text="Facile"/>
-        <RadioButton fx:id="moyenneRadio" text="Moyenne"/>
-        <RadioButton fx:id="difficileRadio" text="Difficile"/>
-    </HBox>
+            <Button fx:id="publierButton" text="Publier" style="-fx-background-color: #4CAF50; -fx-text-fill: white;" />
+        </VBox>
+    </center>
+</BorderPane>
 
-    <Button text="Choisir un fichier" onAction="#handleFileUpload"/>
-    <Label fx:id="fileLabel" text="Aucun fichier sélectionné" wrapText="true" maxWidth="300"/>
-
-    <Button text="Publier" onAction="#handlePublier"/>
-
-</VBox>
 
