@@ -17,7 +17,7 @@ public class MainApp extends Application {
         try {
             primaryStage = stage;
 
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/example/projet/login.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/example/projet/addResource.fxml"));
             Scene scene = new Scene(fxmlLoader.load(), 900, 700);
             primaryStage.setTitle("Accueil");
             primaryStage.setScene(scene);
