@@ -1,60 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.example.projet.Controller.RessourceController"
-            prefHeight="400.0" prefWidth="600.0">
-    <VBox alignment="TOP_CENTER" spacing="15" AnchorPane.topAnchor="10" AnchorPane.leftAnchor="10" AnchorPane.rightAnchor="10">
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.example.projet.Controller.RessourceController"
+      spacing="15" padding="20" alignment="TOP_CENTER">
 
-        <Label text="Nom Ressource" style="-fx-font-size: 24px; -fx-font-weight: bold;" />
+    <TextField fx:id="nomField" promptText="Nom de la ressource" />
+    <TextArea fx:id="descriptionField" promptText="Description" wrapText="true" />
+    <TextField fx:id="evaluationField" promptText="Évaluation (0-5)" />
 
-        <GridPane hgap="10" vgap="15">
-            <columnConstraints>
-                <ColumnConstraints halignment="RIGHT" />
-                <ColumnConstraints hgrow="ALWAYS" />
-            </columnConstraints>
+    <HBox spacing="10">
+        <Button text="Valider" onAction="#valider"/>
+        <Button text="Supprimer" onAction="#supprimer"/>
+    </HBox>
 
-            <Label text="Titre :" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
-            <TextField fx:id="titreField" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
-
-            <Label text="Description :" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
-            <TextArea fx:id="descriptionArea" prefRowCount="3" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
-
-            <Label text="Difficulté :" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
-            <TextField fx:id="difficulteField" promptText="Facile" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
-
-            <Label text="Enseignant :" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
-            <TextField fx:id="enseignantField" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
-
-            <Label text="Document :" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
-            <HBox spacing="10" GridPane.rowIndex="4" GridPane.columnIndex="1">
-                <TextField fx:id="documentField" promptText="fichier.pdf" />
-                <Button text="Télécharger" fx:id="telechargerButton"/>
-            </HBox>
-
-            <Label text="Commentaires :" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
-            <TextArea fx:id="commentairesArea" prefRowCount="3" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
-        </GridPane>
-
-        <HBox spacing="10" alignment="CENTER_LEFT">
-            <Label text="Évaluation :" />
-            <HBox spacing="5">
-                <Button text="★" style="-fx-background-color: transparent;" />
-                <Button text="★" style="-fx-background-color: transparent;" />
-                <Button text="★" style="-fx-background-color: transparent;" />
-                <Button text="★" style="-fx-background-color: transparent;" />
-                <Button text="★" style="-fx-background-color: transparent;" />
-            </HBox>
-        </HBox>
-
-        <HBox spacing="20" alignment="CENTER">
-            <Button text="Favoris" fx:id="favorisButton" prefWidth="120"/>
-            <Button text="Terminées" fx:id="termineesButton" prefWidth="120"/>
-        </HBox>
-
-    </VBox>
-
-</AnchorPane>
+    <HBox spacing="10">
+        <Button text="Ajouter aux favoris" onAction="#ajouterAuxFavoris"/>
+        <Button text="Marquer comme terminé" onAction="#ajouterAuxTermines"/>
+    </HBox>
+</VBox>

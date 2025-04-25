@@ -1,44 +1,70 @@
 package com.example.projet.Controller;
 
+import com.example.projet.Dao.UtilisateurDao;
+import com.example.projet.Model.StudentModel;
+import com.example.projet.Model.UserModel;
+import com.example.projet.Model.TeacherModel;
+
+
 import com.example.projet.MainApp;
-import javafx.fxml.FXML;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.scene.control.*;
+
+import java.io.IOException;
 
 public class LoginController {
 
-    @FXML
-    private TextField username;
+    @FXML private TextField username;
+    @FXML private PasswordField password;
+    @FXML private Label messageLabel;
+
+    private UtilisateurDao utilisateurDAO;
+
+    public LoginController() {
+        utilisateurDAO = new UtilisateurDao();
+    }
 
     @FXML
-    private TextField password;
+    private void handleLogin(ActionEvent event) throws IOException {
+        String email = username.getText();
+        String motDePasse = password.getText();
 
-    @FXML
-    private Button loginButton;
+        if (email.isEmpty() || motDePasse.isEmpty()) {
+            messageLabel.setText("Veuillez remplir tous les champs.");
+            return;
+        }
 
-    @FXML
-    private Label messageLabel;
+        UserModel user = utilisateurDAO.getUtilisateurByEmailAndPassword(email, motDePasse);
 
-    @FXML
-    private Hyperlink registerLink;
+        if (user != null) {
+            messageLabel.setText("Bienvenue " + user.getNom() + " (" + user.getRole() + ")");
 
-    @FXML
-    public void handleLogin() {
-        String user = username.getText();
-        if (user.isEmpty()) {
-            messageLabel.setText("Veuillez entrer votre nom d'utilisateur !");
+            try {
+                if (user instanceof TeacherModel) {
+                    MainApp.showView("dashboardTeacher.fxml");
+                } else if (user instanceof StudentModel) {
+                    MainApp.showView("dashboardStudent.fxml");
+                } else {
+                    messageLabel.setText("Email ou mot de passe incorrect.");
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                messageLabel.setText("Erreur lors du chargement du tableau de bord.");
+            }
+
         } else {
-            messageLabel.setText("Bienvenue " + user + " !");
+            messageLabel.setText("Identifiants invalides.");
         }
     }
 
     @FXML
-    public void onRegisterLinkClicked(ActionEvent event) {
+    private void onRegisterLinkClicked() {
         try {
             MainApp.showRegisterView();
         } catch (Exception e) {
             e.printStackTrace();
+            messageLabel.setText("Erreur lors du changement de vue.");
         }
     }
 }
-

@@ -11,9 +11,7 @@ import java.util.List;
 import java.sql.*;
 import javafx.scene.control.*;
 
-
 public class DashboardStudentController {
-
     private ProgressionDao prog;
     private RecommendationEngine recommendation;
 
@@ -33,6 +31,16 @@ public class DashboardStudentController {
         int nbTerminées=prog.NbRessourcesTerminees(idEtudiant);
         return (nbTerminées/nbEnregistrées)*100;
     }
+    /*public double NbRessourcesConsultées(int idEtudiant)
+    {
+        return prog.NbRessourcesConsultées(idEtudiant);
+    }
+    public double NbRessourcesEnregistrées(int idEtudiant)  {
+        return prog.NbRessourcesEnregistrees(idEtudiant);
+    }
+    public double NbRessourcesTerminées(int idEtudiant)  {
+        return prog.NbRessourcesTerminees(idEtudiant);
+    }*/
 
     public void EnregistrerRessource (int idEtudiant,int idRessource)
     {
@@ -85,15 +93,4 @@ public class DashboardStudentController {
         stage.setScene(scene);
         stage.show();
     }
-
 }
-
-
-
-
-
-
-
-
-
-

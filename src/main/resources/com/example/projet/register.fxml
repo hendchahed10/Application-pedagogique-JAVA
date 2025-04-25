@@ -5,29 +5,38 @@
 
 <StackPane xmlns:fx="http://javafx.com/fxml"
            fx:controller="com.example.projet.Controller.RegisterController"
-           prefWidth="600" prefHeight="400"
-           style="-fx-background-color: black;">
+           prefWidth="600" prefHeight="450"
+           style="-fx-background-color: linear-gradient(to right, #E3F2FD, #BBDEFB);">
 
-    <VBox spacing="15" alignment="CENTER"
-          style="-fx-background-color: white; -fx-padding: 30px; -fx-background-radius: 10px;"
-          maxWidth="400" maxHeight="450">
+    <VBox spacing="20" alignment="CENTER"
+          style="-fx-background-color: white; -fx-padding: 40px; -fx-background-radius: 15px; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0, 0, 4);"
+          maxWidth="400" maxHeight="500">
 
-        <Label text="Inscription" style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: black;"/>
+        <Label text="Inscription"
+               style="-fx-font-size: 26px; -fx-text-fill: #2196F3; -fx-font-weight: bold;"/>
 
-        <TextField fx:id="fullNameField" promptText="Nom complet" />
-        <TextField fx:id="emailField" promptText="Email" />
-        <PasswordField fx:id="passwordField" promptText="Mot de passe" />
+        <TextField fx:id="fullNameField" promptText="Nom complet"
+                   style="-fx-font-size: 14px; -fx-pref-width: 250px; -fx-padding: 10px; -fx-background-radius: 6px; -fx-border-radius: 6px; -fx-border-color: #BBDEFB;"/>
 
-        <HBox spacing="10" alignment="CENTER">
-            <RadioButton text="Étudiant" fx:id="studentRadio"/>
-            <RadioButton text="Enseignant" fx:id="teacherRadio"/>
+        <TextField fx:id="emailField" promptText="Email"
+                   style="-fx-font-size: 14px; -fx-pref-width: 250px; -fx-padding: 10px; -fx-background-radius: 6px; -fx-border-radius: 6px; -fx-border-color: #BBDEFB;"/>
+
+        <PasswordField fx:id="passwordField" promptText="Mot de passe"
+                       style="-fx-font-size: 14px; -fx-pref-width: 250px; -fx-padding: 10px; -fx-background-radius: 6px; -fx-border-radius: 6px; -fx-border-color: #BBDEFB;"/>
+
+        <HBox spacing="15" alignment="CENTER">
+            <RadioButton text="Étudiant" fx:id="studentRadio" style="-fx-text-fill: #2196F3;"/>
+            <RadioButton text="Enseignant" fx:id="teacherRadio" style="-fx-text-fill: #2196F3;"/>
         </HBox>
 
-        <Button fx:id="RegisterButton" text="S'inscrire" onAction="#handleRegister" style="-fx-background-color: black; -fx-text-fill: white; -fx-font-size: 14px;"/>
+        <Button fx:id="RegisterButton" text="S'inscrire" onAction="#handleRegister"
+                style="-fx-background-color: #2196F3; -fx-text-fill: white; -fx-font-size: 15px; -fx-font-weight: bold; -fx-pref-width: 250px; -fx-background-radius: 6px; -fx-padding: 10px;"/>
 
-        <Label fx:id="registerMessage" text="" style="-fx-text-fill: black; -fx-font-size: 14px;"/>
+        <Label fx:id="registerMessage" text=""
+               style="-fx-text-fill: red; -fx-font-size: 13px;"/>
 
-        <Hyperlink text="Vous avez déjà un compte ? Se connecter" fx:id="loginLink" onAction="#goToLogin"/>
+        <Hyperlink text="Vous avez déjà un compte ? Se connecter" fx:id="loginLink" onAction="#goToLogin"
+                   style="-fx-font-size: 12px; -fx-text-fill: #1976D2;"/>
 
     </VBox>
 

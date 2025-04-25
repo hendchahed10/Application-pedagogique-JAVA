@@ -2,18 +2,22 @@ package com.example.projet;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+
+import java.io.IOException;
 
 
 public class MainApp extends Application {
     private static Stage primaryStage;
+
     @Override
     public void start(Stage stage) {
         try {
             primaryStage = stage;
 
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/example/projet/dashboardStudent.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/example/projet/acceuil.fxml"));
             Scene scene = new Scene(fxmlLoader.load(), 900, 700);
             primaryStage.setTitle("Accueil");
             primaryStage.setScene(scene);
@@ -61,6 +65,13 @@ public class MainApp extends Application {
         primaryStage.setTitle("Ajout Ressource");
         primaryStage.setScene(scene);
         primaryStage.show();
+    }
+
+    public static void showView(String fxmlFile) throws IOException {
+        Parent root = FXMLLoader.load(MainApp.class.getResource("/views/" + fxmlFile));
+        Stage stage = new Stage();
+        stage.setScene(new Scene(root));
+        stage.show();
     }
 
 

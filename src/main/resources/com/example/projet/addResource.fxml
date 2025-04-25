@@ -1,28 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.geometry.Pos?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.text.Font?>
 
-<BorderPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.projet.Controller.AddResourceController">
-    <center>
-        <VBox spacing="10" alignment="CENTER" padding="20">
-            <Label text="Ajout Ressources" style="-fx-font-size: 24px; -fx-font-weight: bold;" />
+<GridPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.projet.Controller.RessourceController" hgap="15" vgap="15" padding="20">
+    <!-- Titre -->
+    <Label text="Ressource x" style="-fx-font-weight: bold; -fx-font-size: 20px; -fx-text-fill: #2196F3;" GridPane.columnSpan="2" GridPane.halignment="CENTER"/>
 
-            <TextField fx:id="titreField" promptText="Titre" />
-            <TextArea fx:id="descriptionArea" promptText="Description" prefRowCount="3" />
+    <!-- Champs de saisie -->
+    <Label text="Titre" style="-fx-font-size: 14px; -fx-text-fill: #333333;" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+    <TextField fx:id="titleField" GridPane.rowIndex="1" GridPane.columnIndex="1" promptText="Entrez le titre" style="-fx-background-color: #f1f1f1; -fx-border-color: #2196F3; -fx-border-radius: 5px; -fx-padding: 8px; -fx-font-size: 14px;"/>
 
-            <Label text="Niveau de difficulté :" />
-            <HBox spacing="10">
-                <RadioButton fx:id="facileRadio" text="Facile" />
-                <RadioButton fx:id="moyenneRadio" text="Moyenne" />
-                <RadioButton fx:id="difficileRadio" text="Difficile"  />
-            </HBox>
+    <Label text="Description" style="-fx-font-size: 14px; -fx-text-fill: #333333;" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+    <TextArea fx:id="descriptionArea" GridPane.rowIndex="2" GridPane.columnIndex="1" promptText="Entrez la description" wrapText="true" style="-fx-background-color: #f1f1f1; -fx-border-color: #2196F3; -fx-border-radius: 5px; -fx-padding: 8px; -fx-font-size: 14px;"/>
 
-            <Button fx:id="uploadButton" text="Télécharger Document" />
+    <Label text="Difficulté" style="-fx-font-size: 14px; -fx-text-fill: #333333;" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+    <TextField fx:id="difficultyField" GridPane.rowIndex="3" GridPane.columnIndex="1" promptText="Difficulté" style="-fx-background-color: #f1f1f1; -fx-border-color: #2196F3; -fx-border-radius: 5px; -fx-padding: 8px; -fx-font-size: 14px;"/>
 
-            <Button fx:id="publierButton" text="Publier" style="-fx-background-color: #4CAF50; -fx-text-fill: white;" />
-        </VBox>
-    </center>
-</BorderPane>
+    <Label text="Enseignant" style="-fx-font-size: 14px; -fx-text-fill: #333333;" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+    <TextField fx:id="teacherField" GridPane.rowIndex="4" GridPane.columnIndex="1" promptText="Nom de l'enseignant" style="-fx-background-color: #f1f1f1; -fx-border-color: #2196F3; -fx-border-radius: 5px; -fx-padding: 8px; -fx-font-size: 14px;"/>
+
+    <Label text="Document" style="-fx-font-size: 14px; -fx-text-fill: #333333;" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
+    <TextField fx:id="documentField" GridPane.rowIndex="5" GridPane.columnIndex="1" promptText="Nom du document" style="-fx-background-color: #f1f1f1; -fx-border-color: #2196F3; -fx-border-radius: 5px; -fx-padding: 8px; -fx-font-size: 14px;"/>
+
+    <Label text="Évaluation" style="-fx-font-size: 14px; -fx-text-fill: #333333;" GridPane.rowIndex="6" GridPane.columnIndex="0"/>
+    <TextField fx:id="ratingField" GridPane.rowIndex="6" GridPane.columnIndex="1" promptText="Évaluation" style="-fx-background-color: #f1f1f1; -fx-border-color: #2196F3; -fx-border-radius: 5px; -fx-padding: 8px; -fx-font-size: 14px;"/>
+
+    <!-- Bouton Ajouter -->
+    <Button text="Ajouter" onAction="#AddResource" GridPane.rowIndex="7" GridPane.columnIndex="1" style="-fx-background-color: #2196F3; -fx-text-fill: white; -fx-font-size: 16px; -fx-font-weight: bold; -fx-padding: 10px 20px; -fx-border-radius: 5px;" />
+</GridPane>
 
 

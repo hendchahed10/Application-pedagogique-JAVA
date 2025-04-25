@@ -6,30 +6,32 @@
 <StackPane xmlns:fx="http://javafx.com/fxml"
            fx:controller="com.example.projet.Controller.LoginController"
            prefWidth="600" prefHeight="400"
-           style="-fx-background-color: black;">
+           style="-fx-background-color: linear-gradient(to right, #E3F2FD, #BBDEFB);">
 
-  <VBox spacing="15" alignment="CENTER"
-        style="-fx-background-color: white; -fx-padding: 30px; -fx-background-radius: 10px;"
-        maxWidth="400" maxHeight="450">
+  <VBox spacing="20" alignment="CENTER"
+        style="-fx-background-color: white; -fx-padding: 40px; -fx-background-radius: 15px; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0, 0, 4);"
+        maxWidth="350" maxHeight="420">
 
-    <Label text="Connexion" style="-fx-font-size: 24px; -fx-text-fill: black; -fx-font-weight: bold;"/>
+    <Label text="Connexion"
+           style="-fx-font-size: 26px; -fx-text-fill: #2196F3; -fx-font-weight: bold;"/>
 
     <TextField fx:id="username" promptText="Nom d'utilisateur"
-               style="-fx-font-size: 14px; -fx-pref-width: 250px;"/>
+               style="-fx-font-size: 14px; -fx-pref-width: 250px; -fx-padding: 10px; -fx-background-radius: 6px; -fx-border-radius: 6px; -fx-border-color: #BBDEFB;"/>
 
     <PasswordField fx:id="password" promptText="Mot de passe"
-                   style="-fx-font-size: 14px; -fx-pref-width: 250px;"/>
+                   style="-fx-font-size: 14px; -fx-pref-width: 250px; -fx-padding: 10px; -fx-background-radius: 6px; -fx-border-radius: 6px; -fx-border-color: #BBDEFB;"/>
 
     <Button fx:id="loginButton" text="Se connecter" onAction="#handleLogin"
-            style="-fx-background-color: black; -fx-text-fill: white; -fx-font-size: 14px; -fx-pref-width: 250px;"/>
+            style="-fx-background-color: #2196F3; -fx-text-fill: white; -fx-font-size: 15px; -fx-font-weight: bold; -fx-pref-width: 250px; -fx-background-radius: 6px; -fx-padding: 10px;"/>
 
     <Label fx:id="messageLabel" text=""
-           style="-fx-text-fill: black; -fx-font-size: 14px;"/>
+           style="-fx-text-fill: red; -fx-font-size: 13px;"/>
 
-    <Hyperlink text="Vous n'avez pas de compte ? S'inscrire"
+    <Hyperlink text="Pas encore de compte ? S'inscrire"
                fx:id="registerLink"
                onAction="#onRegisterLinkClicked"
-               style="-fx-font-size: 12px;"/>
+               style="-fx-font-size: 12px; -fx-text-fill: #1976D2;"/>
+
   </VBox>
 
 </StackPane>

@@ -52,7 +52,6 @@
                             </FXCollections>
                         </items>
                     </ChoiceBox>
-
                 </HBox>
             </HBox>
 
@@ -60,21 +59,21 @@
                 <HBox spacing="10" alignment="CENTER_LEFT"
                       prefWidth="600"
                       style="-fx-background-color: lightgray; -fx-background-radius: 15; -fx-padding: 10;">
-                <Label text="Ressource 1" />
+                    <Label text="Ressource 1" />
                     <Pane HBox.hgrow="ALWAYS" />
                     <Button text="Consulter" onAction="#handleConsulter" style="-fx-background-color: black; " textFill="white"/>
                 </HBox>
                 <HBox spacing="10" alignment="CENTER_LEFT"
                       prefWidth="600"
                       style="-fx-background-color: lightgray; -fx-background-radius: 15; -fx-padding: 10;">
-                <Label text="Ressource 2" />
+                    <Label text="Ressource 2" />
                     <Pane HBox.hgrow="ALWAYS" />
                     <Button text="Consulter" onAction="#handleConsulter" style="-fx-background-color: black;" textFill="white"/>
                 </HBox>
                 <HBox spacing="10" alignment="CENTER_LEFT"
                       prefWidth="600"
                       style="-fx-background-color: lightgray; -fx-background-radius: 15; -fx-padding: 10;">
-                <Label text="Ressource 3" />
+                    <Label text="Ressource 3" />
                     <Pane HBox.hgrow="ALWAYS" />
                     <Button text="Consulter" onAction="#handleConsulter" style="-fx-background-color: black;" textFill="white"/>
                 </HBox>
