@@ -25,7 +25,7 @@
                        style="-fx-font-size: 14px; -fx-pref-width: 250px; -fx-padding: 10px; -fx-background-radius: 6px; -fx-border-radius: 6px; -fx-border-color: #BBDEFB;"/>
 
         <HBox spacing="15" alignment="CENTER">
-            <RadioButton text="Étudiant" fx:id="studentRadio" style="-fx-text-fill: #2196F3;"/>
+            <RadioButton text="Etudiant" fx:id="studentRadio" style="-fx-text-fill: #2196F3;"/>
             <RadioButton text="Enseignant" fx:id="teacherRadio" style="-fx-text-fill: #2196F3;"/>
         </HBox>
 

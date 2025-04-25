@@ -7,13 +7,13 @@ import com.example.projet.Model.TeacherModel;
 import java.sql.*;
 
 public class UtilisateurDao {
-
-    private static final String URL = "jdbc:sqlite:database.db";
-
+    private static final String URL = "jdbc:sqlite:C:/IdeaProjects/projet/database.db";
     public UtilisateurDao() {}
 
     public UtilisateurDao(String fullName, String email, String password, String role) {
     }
+
+
 
     public static Connection connect() {
         try {

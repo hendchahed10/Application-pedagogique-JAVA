@@ -42,9 +42,9 @@ public class LoginController {
 
             try {
                 if (user instanceof TeacherModel) {
-                    MainApp.showView("dashboardTeacher.fxml");
+                    MainApp.showView("com/example/projet/dashboardTeacher.fxml");
                 } else if (user instanceof StudentModel) {
-                    MainApp.showView("dashboardStudent.fxml");
+                    MainApp.showView("com/example/projet/dashboardStudent.fxml");
                 } else {
                     messageLabel.setText("Email ou mot de passe incorrect.");
                 }

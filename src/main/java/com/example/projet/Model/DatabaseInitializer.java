@@ -7,8 +7,7 @@ import java.sql.Statement;
 
 public class DatabaseInitializer {
     public static void main(String[] args) {
-        String url = "jdbc:sqlite:database.db";
-
+        String url = "jdbc:sqlite:C:/IdeaProjects/projet/database.db";
         String[] sqlStatements = {
                 "CREATE TABLE IF NOT EXISTS Utilisateur (" +
                         "id INTEGER PRIMARY KEY AUTOINCREMENT, " +

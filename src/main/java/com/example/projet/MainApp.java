@@ -17,7 +17,7 @@ public class MainApp extends Application {
         try {
             primaryStage = stage;
 
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/example/projet/acceuil.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/example/projet/login.fxml"));
             Scene scene = new Scene(fxmlLoader.load(), 900, 700);
             primaryStage.setTitle("Accueil");
             primaryStage.setScene(scene);
@@ -68,11 +68,12 @@ public class MainApp extends Application {
     }
 
     public static void showView(String fxmlFile) throws IOException {
-        Parent root = FXMLLoader.load(MainApp.class.getResource("/views/" + fxmlFile));
+        Parent root = FXMLLoader.load(MainApp.class.getResource("/" + fxmlFile));
         Stage stage = new Stage();
         stage.setScene(new Scene(root));
         stage.show();
     }
+
 
 
 

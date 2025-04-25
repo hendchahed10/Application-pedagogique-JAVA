@@ -1,54 +1,53 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.geometry.*?>
 <?import javafx.collections.FXCollections?>
-<?import java.lang.String?>
 
-<BorderPane fx:controller="com.example.projet.Controller.DashboardStudentController" xmlns:fx="http://javafx.com/fxml" prefWidth="1000" prefHeight="600" style="-fx-background-color: black;">
+<?import java.lang.String?>
+<BorderPane fx:controller="com.example.projet.Controller.DashboardStudentController" xmlns:fx="http://javafx.com/fxml" prefWidth="1000" prefHeight="600" style="-fx-background-color: linear-gradient(to right, #E3F2FD, #BBDEFB);">
 
     <left>
-        <VBox spacing="10" alignment="TOP_CENTER">
+        <VBox spacing="10" alignment="TOP_CENTER" style="-fx-background-color: #E3F2FD;">
             <padding>
                 <Insets top="20.0" right="20.0" bottom="20.0" left="20.0"/>
             </padding>
-            <Button text="Dashboard" fx:id="dashboardBtn" prefWidth="120" style="-fx-background-color: lightgray;"/>
-            <Button text="terminées" fx:id="termineesBtn" prefWidth="120" style="-fx-background-color: lightgray;"/>
-            <Button text="favoris" fx:id="favorisBtn" prefWidth="120" style="-fx-background-color: lightgray;"/>
-            <Button text="Déconnexion" fx:id="logoutBtn" onAction="#handleLogout" prefWidth="120" style="-fx-background-color: lightgray;"/>
+            <Button text="Dashboard" fx:id="dashboardBtn" prefWidth="120" style="-fx-background-color: #90CAF9; -fx-text-fill: #0D47A1;"/>
+            <Button text="Terminées" fx:id="termineesBtn" prefWidth="120" style="-fx-background-color: #90CAF9; -fx-text-fill: #0D47A1;"/>
+            <Button text="Favoris" fx:id="favorisBtn" prefWidth="120" style="-fx-background-color: #90CAF9; -fx-text-fill: #0D47A1;"/>
+            <Button text="Déconnexion" fx:id="logoutBtn" onAction="#handleLogout" prefWidth="120" style="-fx-background-color: #90CAF9; -fx-text-fill: #0D47A1;"/>
         </VBox>
     </left>
 
     <center>
-        <VBox spacing="20" alignment="TOP_CENTER" style="-fx-padding:20; -fx-border-color: white; -fx-border-width: 0 0 0 1;">
-            <Label text="Tableau de bord étudiant" textFill="white" style="-fx-font-size: 24;" />
+        <VBox spacing="20" alignment="TOP_CENTER" style="-fx-padding:20; -fx-border-color: #BBDEFB; -fx-border-width: 0 0 0 1; -fx-background-color: linear-gradient(to right, #E3F2FD, #BBDEFB);">
+            <Label text="Tableau de bord étudiant" textFill="#0D47A1" style="-fx-font-size: 26px; -fx-font-weight: bold;" />
             <HBox spacing="30" alignment="CENTER">
-                <VBox alignment="CENTER" style="-fx-background-color: lightgray; -fx-background-radius: 15;" prefWidth="150" prefHeight="80">
-                    <Label fx:id="consultedLabel" text="14" style="-fx-font-size: 24; " />
-                    <Label text="nb ressources consultées"/>
+                <VBox alignment="CENTER" style="-fx-background-color: #BBDEFB; -fx-background-radius: 15;" prefWidth="150" prefHeight="80">
+                    <Label fx:id="consultedLabel" text="14" style="-fx-font-size: 24;" />
+                    <Label text="Nb ressources consultées"/>
                 </VBox>
-                <VBox alignment="CENTER" style="-fx-background-color: lightgray; -fx-background-radius: 15;" prefWidth="150" prefHeight="80">
+                <VBox alignment="CENTER" style="-fx-background-color: #BBDEFB; -fx-background-radius: 15;" prefWidth="150" prefHeight="80">
                     <Label fx:id="completedLabel" text="5" style="-fx-font-size: 24;" />
-                    <Label text="nb ressources terminées"/>
+                    <Label text="Nb ressources terminées"/>
                 </VBox>
-                <VBox alignment="CENTER" style="-fx-background-color: lightgray; -fx-background-radius: 15;" prefWidth="150" prefHeight="80">
+                <VBox alignment="CENTER" style="-fx-background-color: #BBDEFB; -fx-background-radius: 15;" prefWidth="150" prefHeight="80">
                     <Label fx:id="savedLabel" text="8" style="-fx-font-size: 24;" />
-                    <Label text="nb ressources enregistrées"/>
+                    <Label text="Nb ressources enregistrées"/>
                 </VBox>
             </HBox>
 
             <HBox alignment="CENTER_LEFT" spacing="10">
-                <Label text="Liste des ressources recommandées" textFill="white"/>
+                <Label text="Liste des ressources recommandées" textFill="#0D47A1" style="-fx-font-weight: bold;"/>
                 <HBox alignment="CENTER_RIGHT" spacing="5">
                     <ChoiceBox fx:id="filterChoiceBox">
                         <items>
                             <FXCollections fx:factory="observableArrayList">
                                 <String fx:value="Filtres"/>
-                                <String fx:value="catégorie"/>
-                                <String fx:value="popularité"/>
-                                <String fx:value="difficulté"/>
-                                <String fx:value="nouveautés"/>
+                                <String fx:value="Catégorie"/>
+                                <String fx:value="Popularité"/>
+                                <String fx:value="Difficulté"/>
+                                <String fx:value="Nouveautés"/>
                             </FXCollections>
                         </items>
                     </ChoiceBox>
@@ -58,24 +57,10 @@
             <VBox spacing="10">
                 <HBox spacing="10" alignment="CENTER_LEFT"
                       prefWidth="600"
-                      style="-fx-background-color: lightgray; -fx-background-radius: 15; -fx-padding: 10;">
+                      style="-fx-background-color: #BBDEFB; -fx-background-radius: 15; -fx-padding: 10;">
                     <Label text="Ressource 1" />
                     <Pane HBox.hgrow="ALWAYS" />
-                    <Button text="Consulter" onAction="#handleConsulter" style="-fx-background-color: black; " textFill="white"/>
-                </HBox>
-                <HBox spacing="10" alignment="CENTER_LEFT"
-                      prefWidth="600"
-                      style="-fx-background-color: lightgray; -fx-background-radius: 15; -fx-padding: 10;">
-                    <Label text="Ressource 2" />
-                    <Pane HBox.hgrow="ALWAYS" />
-                    <Button text="Consulter" onAction="#handleConsulter" style="-fx-background-color: black;" textFill="white"/>
-                </HBox>
-                <HBox spacing="10" alignment="CENTER_LEFT"
-                      prefWidth="600"
-                      style="-fx-background-color: lightgray; -fx-background-radius: 15; -fx-padding: 10;">
-                    <Label text="Ressource 3" />
-                    <Pane HBox.hgrow="ALWAYS" />
-                    <Button text="Consulter" onAction="#handleConsulter" style="-fx-background-color: black;" textFill="white"/>
+                    <Button text="Consulter" onAction="#handleConsulter" style="-fx-background-color: #1976D2; -fx-text-fill: white;"/>
                 </HBox>
             </VBox>
         </VBox>
