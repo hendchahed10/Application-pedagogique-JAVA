@@ -25,7 +25,9 @@ public class UtilisateurDao {
     }
 
     public UserModel getUtilisateurByEmailAndPassword(String email, String motDePasse) {
-        String sql = "SELECT * FROM Utilisateur WHERE email = ? AND motDePasse = ?";
+        String sql = "SELECT u.*, e.modules FROM Utilisateur u " +
+                "LEFT JOIN Enseignant e ON u.id = e.id_enseignant " +
+                "WHERE u.email = ? AND u.motDePasse = ?";
 
         try (Connection conn = connect();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -37,32 +39,29 @@ public class UtilisateurDao {
 
             if (rs.next()) {
                 String role = rs.getString("role");
+                int userId = rs.getInt("id");
 
                 if ("etudiant".equalsIgnoreCase(role)) {
                     return new StudentModel(
-                            rs.getInt("id"),
+                            userId,
                             rs.getString("nom"),
                             rs.getString("email"),
                             rs.getString("motDePasse"),
                             role
                     );
                 } else if ("enseignant".equalsIgnoreCase(role)) {
-                    // Récupère la colonne 'modules' seulement pour les enseignants
                     String modules = rs.getString("modules");
-                    if (modules == null) {
-                        modules = ""; // Si pas de modules, on met une chaîne vide
-                    }
                     return new TeacherModel(
-                            rs.getInt("id"),
+                            userId,
                             rs.getString("nom"),
                             rs.getString("email"),
                             rs.getString("motDePasse"),
                             role,
-                            modules // Si 'modules' est vide ou null, l'enseignant aura un champ vide
+                            modules != null ? modules : ""
                     );
                 } else {
                     return new UserModel(
-                            rs.getInt("id"),
+                            userId,
                             rs.getString("nom"),
                             rs.getString("email"),
                             rs.getString("motDePasse"),
@@ -70,17 +69,11 @@ public class UtilisateurDao {
                     );
                 }
             }
-
         } catch (SQLException e) {
             System.out.println("Erreur lors de la récupération de l'utilisateur : " + e.getMessage());
         }
-
         return null;
     }
-
-
-
-
 
     public static boolean ajouterUtilisateur(UserModel utilisateur) {
         String sql;
