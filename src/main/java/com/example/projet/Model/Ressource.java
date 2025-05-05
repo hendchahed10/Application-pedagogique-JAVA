@@ -3,14 +3,17 @@ package com.example.projet.Model;
 public class Ressource {
     private int id;
     private String titre;
+    private String categorie;
     private String description;
     private String difficulte;
     private String urlpdf;
     private int id_enseignant;
 
 
-    public Ressource(String titre, String description, String difficulte, String urlpdf, int id_enseignant) {
+    public Ressource(int id , String titre, String categorie, String description, String difficulte, String urlpdf, int id_enseignant) {
+        this.id = id;
         this.titre = titre;
+        this.categorie = categorie;
         this.description = description;
         this.difficulte = difficulte;
         this.urlpdf = urlpdf;
@@ -23,6 +26,9 @@ public class Ressource {
 
     public String getTitre() { return titre; }
     public void setTitre(String titre) { this.titre = titre; }
+
+    public String getCategorie() {return categorie;}
+    public void setCategorie(String categorie) {this.categorie = categorie;}
 
     public String getDescription() { return description; }
     public void setDescription(String description) { this.description = description; }

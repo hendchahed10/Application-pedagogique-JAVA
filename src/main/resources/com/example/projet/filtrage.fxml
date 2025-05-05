@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/21"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.example.projet.Controller.DashboardStudentController"
+      spacing="15"
+      style="-fx-background-color: white; -fx-padding: 20; -fx-border-color: #E0E0E0; -fx-border-width: 1; -fx-border-radius: 5;">
+
+    <Label text="Filtrer vos ressources "
+           style="-fx-font-weight: bold; -fx-font-size: 18; -fx-text-fill: #0D47A1; -fx-padding: 0 0 10 0;"/>
+
+    <VBox spacing="5" style="-fx-background-color: #F5F9FF; -fx-padding: 10; -fx-border-radius: 5;">
+        <HBox spacing="15" alignment="CENTER_LEFT">
+            <Label text="Difficulté :" style="-fx-font-weight: bold; -fx-text-fill: #0D47A1;"/>
+            <RadioButton text="Facile" toggleGroup="$difficulteGroup" userData="Facile"
+                         style="-fx-text-fill: #333333;"/>
+            <RadioButton text="Moyen" toggleGroup="$difficulteGroup" userData="Moyen"
+                         style="-fx-text-fill: #333333;"/>
+            <RadioButton text="Difficile" toggleGroup="$difficulteGroup" userData="Difficile"
+                         style="-fx-text-fill: #333333;"/>
+        </HBox>
+    </VBox>
+
+    <VBox spacing="5" style="-fx-background-color: #F5F9FF; -fx-padding: 10; -fx-border-radius: 5;">
+        <HBox spacing="15" alignment="CENTER_LEFT">
+            <Label text="Nouveauté :" style="-fx-font-weight: bold; -fx-text-fill: #0D47A1;"/>
+            <RadioButton text="Ancien" toggleGroup="$nouveauteGroup" userData="Ancien"
+                         style="-fx-text-fill: #333333;"/>
+            <RadioButton text="Nouveau" toggleGroup="$nouveauteGroup" userData="Nouveau"
+                         style="-fx-text-fill: #333333;"/>
+        </HBox>
+    </VBox>
+
+    <VBox spacing="5" style="-fx-background-color: #F5F9FF; -fx-padding: 10; -fx-border-radius: 5;">
+        <HBox spacing="15">
+            <Label text="Catégorie :" style="-fx-font-weight: bold; -fx-text-fill: #0D47A1;"/>
+            <RadioButton text="Informatique" toggleGroup="$categorieGroup" userData="Informatique"
+                         style="-fx-text-fill: #333333;"/>
+            <RadioButton text="Science" toggleGroup="$categorieGroup" userData="Science"
+                         style="-fx-text-fill: #333333;"/>
+            <RadioButton text="Gestion" toggleGroup="$categorieGroup" userData="Gestion"
+                         style="-fx-text-fill: #333333;"/>
+        </HBox>
+        <HBox spacing="15" style="-fx-padding: 5 0 0 0;">
+            <RadioButton text="Economie" toggleGroup="$categorieGroup" userData="Economie"
+                         style="-fx-text-fill: #333333;"/>
+            <RadioButton text="Littérature" toggleGroup="$categorieGroup" userData="Littérature"
+                         style="-fx-text-fill: #333333;"/>
+            <RadioButton text="Mathématiques" toggleGroup="$categorieGroup" userData="Mathématiques"
+                         style="-fx-text-fill: #333333;"/>
+        </HBox>
+    </VBox>
+
+    <VBox spacing="5" style="-fx-background-color: #F5F9FF; -fx-padding: 10; -fx-border-radius: 5;">
+        <HBox spacing="15" style="-fx-padding: 5 0 0 0;">
+            <Label text="Popularité" style="-fx-font-weight: bold; -fx-text-fill: #0D47A1;"/>
+            <RadioButton fx:id="meilleureNotee" text="Meilleure notée"
+                         style="-fx-text-fill: #333333;"/>
+        </HBox>
+    </VBox>
+
+    <Button fx:id="appliquerButton" text="Appliquer" onAction="#appliquerFiltres"
+            style="-fx-font-weight: bold; -fx-font-size: 14; -fx-background-color: #0D47A1; -fx-text-fill: white; -fx-padding: 8 20; -fx-background-radius: 5;"/>
+
+    <fx:define>
+        <ToggleGroup fx:id="difficulteGroup"/>
+        <ToggleGroup fx:id="nouveauteGroup"/>
+        <ToggleGroup fx:id="categorieGroup"/>
+    </fx:define>
+</VBox>

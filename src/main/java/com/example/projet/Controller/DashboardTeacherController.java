@@ -1,11 +1,7 @@
 package com.example.projet.Controller;
 
-import com.example.projet.Dao.EnseignantDao;
-import com.example.projet.Dao.RessourceDao;
-import com.example.projet.Dao.UtilisateurDao;
-import com.example.projet.Model.Ressource;
-import com.example.projet.Model.UserModel;
-import com.example.projet.TestConnection;
+import com.example.projet.Model.*;
+import com.example.projet.Dao.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -18,36 +14,50 @@ import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+
+
 import java.io.File;
-import java.sql.SQLException;
 
 public class DashboardTeacherController {
+    private RessourceDao ressourceDao;
+    private UtilisateurDao utilisateurDao;
+    private int currentTeacherId ;
+    private final ObservableList<Ressource> ressources = FXCollections.observableArrayList();
+    private Ressource selectedRessource = null;
 
+    @FXML private Label nbStudentsLabel;
+    @FXML private Label averageRatingLabel;
+    @FXML private Label nbFavorisLabel;
+    @FXML private Label nbResourcesLabel;
     @FXML private TextField titleField;
     @FXML private TextArea descriptionArea;
     @FXML private TextField documentField;
-    @FXML private RadioButton facileRadio;
-    @FXML private RadioButton moyenneRadio;
-    @FXML private RadioButton difficileRadio;
     @FXML private ToggleGroup difficultyGroup;
     @FXML private Button logoutButton;
-    @FXML private Button AjoutButton;
     @FXML private ListView<Ressource> ressourceListView;
+    @FXML private ComboBox<String> categoryComboBox;
 
-    private ObservableList<Ressource> ressources = FXCollections.observableArrayList();
-    private Ressource selectedRessource = null;
-    private int currentTeacherId;
-    private RessourceDao ressourceDao;
-    public DashboardTeacherController(){
-        ressourceDao=new RessourceDao();
+    public DashboardTeacherController () {
+        ressourceDao = new RessourceDao();
+        utilisateurDao= new UtilisateurDao();
     }
 
     @FXML
     public void initialize() {
         UserModel user = LoginController.getCurrentuser();
         currentTeacherId = user.getId();
-        ressourceListView.setItems(ressources);
 
+        categoryComboBox.getItems().addAll(
+                "Informatique", "Science", "Gestion", "Economie", "Littérature", "Mathématiques"
+        );
+
+        loadRessources();
+        afficherNombreEtudiants();
+        afficherNbRessourcesPourCetEnseignant();
+        afficherNbFavorisRessources();
+        afficherRateRessources();
+
+        ressourceListView.setItems(ressources);
         ressourceListView.setCellFactory(listView -> new ListCell<>() {
             private final HBox content;
             private final Label titleLabel;
@@ -65,19 +75,16 @@ public class DashboardTeacherController {
                 editButton.setOnAction(event -> {
                     selectedRessource = getItem();
                     if (selectedRessource != null) {
-                        titleField.setText(selectedRessource.getTitre());
-                        descriptionArea.setText(selectedRessource.getDescription());
-                        documentField.setText(selectedRessource.getDocument());
-                        switch (selectedRessource.getDifficulte()) {
-                            case "Facile" -> difficultyGroup.selectToggle(facileRadio);
-                            case "Moyenne" -> difficultyGroup.selectToggle(moyenneRadio);
-                            case "Difficile" -> difficultyGroup.selectToggle(difficileRadio);
-                        }
+                        populateFields(selectedRessource);
                     }
                 });
 
                 deleteButton.setOnAction(event -> {
-                    ressources.remove(getItem());
+                    Ressource ressourceToDelete = getItem();
+                    if (ressourceToDelete != null) {
+                        ressourceDao.supprimerRessource(ressourceToDelete.getId());
+                        ressources.remove(ressourceToDelete);
+                    }
                 });
 
                 content = new HBox(10, titleLabel, editButton, deleteButton);
@@ -91,13 +98,35 @@ public class DashboardTeacherController {
                     setGraphic(null);
                 } else {
                     titleLabel.setText(item.getTitre());
-                    System.out.println(item.getTitre());
                     setGraphic(content);
                 }
             }
-
         });
     }
+
+    private void showAlert(Alert.AlertType type, String title, String header, String content) {
+        Alert alert = new Alert(type);
+        alert.setTitle(title);
+        alert.setHeaderText(header);
+        alert.setContentText(content);
+        alert.showAndWait();
+    }
+
+    private void populateFields(Ressource ressource) {
+        titleField.setText(ressource.getTitre());
+        descriptionArea.setText(ressource.getDescription());
+        documentField.setText(ressource.getDocument());
+        categoryComboBox.setValue(ressource.getCategorie());
+
+        for (Toggle toggle : difficultyGroup.getToggles()) {
+            RadioButton radio = (RadioButton) toggle;
+            if (radio.getText().equalsIgnoreCase(ressource.getDifficulte())) {
+                difficultyGroup.selectToggle(radio);
+                break;
+            }
+        }
+    }
+
 
     @FXML
     private void handleLogout() {
@@ -108,7 +137,7 @@ public class DashboardTeacherController {
             stage.show();
         } catch (Exception e) {
             e.printStackTrace();
-            System.err.println("Erreur lors du chargement de la vue d'accueil");
+            System.err.println("Erreur lors du chargement de la vue d'accueil.");
         }
     }
 
@@ -116,49 +145,101 @@ public class DashboardTeacherController {
     private void handleDownload(ActionEvent event) {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Télécharger le PDF");
-        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("PDF Files", "*.pdf"));
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Fichiers PDF", "*.pdf"));
         File selectedFile = fileChooser.showSaveDialog(null);
 
         if (selectedFile != null) {
             documentField.setText(selectedFile.getAbsolutePath());
-            System.out.println("Fichier sélectionné: " + selectedFile.getAbsolutePath());
+            System.out.println("Fichier sélectionné : " + selectedFile.getAbsolutePath());
         }
     }
 
     @FXML
-    private void handleAddButton(ActionEvent event) throws SQLException {
+    private void handleAddButton(ActionEvent event) {
         String title = titleField.getText().trim();
         String description = descriptionArea.getText().trim();
         String document = documentField.getText().trim();
-
         RadioButton selectedRadio = (RadioButton) difficultyGroup.getSelectedToggle();
+        String categorie = categoryComboBox.getValue();
         String difficulte = selectedRadio != null ? selectedRadio.getText() : "";
 
-        if (title.isEmpty()) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Erreur");
-            alert.setHeaderText("Champs vides");
-            alert.setContentText("Veuillez entrer le titre.");
-            alert.showAndWait();
+        if (title.isEmpty() || difficulte.isEmpty() || categorie == null || categorie.isEmpty()) {
+            showAlert(Alert.AlertType.ERROR, "Erreur", "Champs obligatoires manquants", "Veuillez remplir tous les champs nécessaires.");
             return;
         }
 
-        if (selectedRessource != null) {
-            selectedRessource.setTitre(title);
-            selectedRessource.setDescription(description);
-            selectedRessource.setDocument(document);
-            selectedRessource.setDifficulte(difficulte);
-            ressourceListView.refresh();
-            selectedRessource = null;
-        } else {
-            Ressource newRessource = new Ressource(title, description, difficulte, document,currentTeacherId);
-            ressources.add(newRessource);
-            ressourceDao.ajouterRessource(newRessource);
+        if (currentTeacherId == -1) {
+            showAlert(Alert.AlertType.ERROR, "Erreur", "Utilisateur non connecté", "Veuillez vous reconnecter.");
+            return;
         }
 
+        Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION);
+        confirmationAlert.setTitle("Confirmation de publication");
+        confirmationAlert.setHeaderText(null);
+        confirmationAlert.setContentText("Vous êtes sûr de vouloir publier cette ressource ?");
+
+        ButtonType buttonOui = new ButtonType("Oui", ButtonBar.ButtonData.OK_DONE);
+        ButtonType buttonNon = new ButtonType("Non", ButtonBar.ButtonData.CANCEL_CLOSE);
+        confirmationAlert.getButtonTypes().setAll(buttonOui, buttonNon);
+
+        confirmationAlert.showAndWait().ifPresent(response -> {
+            if (response == buttonOui) {
+                if (selectedRessource == null) {
+                    Ressource newRessource = new Ressource(0, title, categorie, description, difficulte, document, currentTeacherId);
+                    ressourceDao.ajouterRessource(newRessource);
+                } else {
+                    selectedRessource.setTitre(title);
+                    selectedRessource.setDescription(description);
+                    selectedRessource.setDifficulte(difficulte);
+                    selectedRessource.setDocument(document);
+                    selectedRessource.setCategorie(categorie);
+                    ressourceDao.mettreAJourRessource(selectedRessource);
+                    selectedRessource = null;
+                }
+
+                loadRessources();
+                clearForm();
+            }
+        });
+    }
+
+
+
+
+    private void loadRessources() {
+        ressources.clear();
+        ressources.addAll(ressourceDao.getRessourcesByEnseignantId( currentTeacherId));
+    }
+
+    private void clearForm() {
         titleField.clear();
         descriptionArea.clear();
         documentField.clear();
         difficultyGroup.selectToggle(null);
+        categoryComboBox.getSelectionModel().clearSelection();
+        selectedRessource = null;
     }
+
+    public void afficherNombreEtudiants() {
+        int total = ressourceDao.getNombreTotalEtudiants();
+        nbStudentsLabel.setText(String.valueOf(total));
+    }
+
+    public void afficherNbRessourcesPourCetEnseignant() {
+        int count = ressourceDao.getNombreRessourcesParEnseignant(currentTeacherId);
+        nbResourcesLabel.setText(String.valueOf(count));
+    }
+
+    public void afficherNbFavorisRessources() {
+        int count =ressourceDao.getNombreRessourcesFavorisParEnseignant(currentTeacherId);
+        nbFavorisLabel.setText(String.valueOf(count));
+    }
+
+    public void afficherRateRessources() {
+        double count =ressourceDao.getNoteMoyenRessourcesParEnseignant(currentTeacherId);
+        averageRatingLabel.setText(String.valueOf(count));
+    }
+
+
+
 }

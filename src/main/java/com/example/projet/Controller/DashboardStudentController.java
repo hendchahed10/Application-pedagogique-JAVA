@@ -12,60 +12,55 @@ import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import java.io.*;
-import java.util.List;
 import java.sql.*;
 
 public class DashboardStudentController {
     private RessourceDao ressourceDao;
-    private RecommendationEngine recommendation;
     private RessourceController ressourceController;
     private UtilisateurDao utilisateurDao;
     private int currentStudentId;
-
-    @FXML
-    private Label statistiquesLabel;
-    @FXML
-    private Label completedLabel;
-    @FXML
-    private Label savedLabel;
-    @FXML
-    private Button dashboardBtn, termineesBtn, favorisBtn, logoutBtn;
-    @FXML
-    private ChoiceBox<String> filterChoiceBox;
-    @FXML
-    private ListView<Ressource> ressourcesrec;
     private ListView<Ressource> terminées;
     private ListView<Ressource> Favoris;
     private ObservableList<Ressource> ressources = FXCollections.observableArrayList();
 
+
+    @FXML private Label statistiquesLabel;
+    @FXML private Label completedLabel;
+    @FXML private Label savedLabel;
+    @FXML private ToggleGroup difficulteGroup;
+    @FXML private ToggleGroup nouveauteGroup;
+    @FXML private ToggleGroup categorieGroup;
+    @FXML private RadioButton meilleureNotee;
+    @FXML private Button dashboardBtn, termineesBtn, favorisBtn, logoutBtn;
+    @FXML private ChoiceBox<String> filterChoiceBox;
+    @FXML private ListView<Ressource> ressourcesrec;
+
     public DashboardStudentController() {
         ressourceDao = new RessourceDao();
-        //recommendation = new RecommendationEngine();
         ressourceController = new RessourceController();
         utilisateurDao= new UtilisateurDao();
     }
 
     @FXML
     public void initialize() throws SQLException {
-        UserModel user = LoginController.getCurrentuser();
-        currentStudentId = user.getId();
-        int nb_favorites = ressourceDao.NbRessourcesTerminees(currentStudentId);
-        int nb_terminées = ressourceDao.NbRessourcesFavories(currentStudentId);
-        double statprog = 0;
-        if (nb_favorites != 0)
-            statprog = (nb_terminées /  nb_favorites) *100;
-        statistiquesLabel.setText(String.valueOf(statprog+"%"));
-        completedLabel.setText(String.valueOf(nb_terminées));
-        savedLabel.setText(String.valueOf(nb_favorites));
-        // Charger toutes les ressources
+        System.out.println("Composants FXML injectés dans DashboardStudentController:");
+        System.out.println("ressourcesrec: " + ressourcesrec);
+        System.out.println("statistiquesLabel: " + statistiquesLabel);
+
+            UserModel user = LoginController.getCurrentuser();
+            currentStudentId = user.getId();
+
+            int nbFavorites = ressourceDao.NbRessourcesTerminees(currentStudentId);
+            int nbTerminees = ressourceDao.NbRessourcesFavories(currentStudentId);
+            double progression = nbFavorites != 0 ? ((double) nbTerminees / nbFavorites) * 100 : 0;
+            statistiquesLabel.setText(String.format("%.1f%%", progression));
+            completedLabel.setText(String.valueOf(nbTerminees));
+            savedLabel.setText(String.valueOf(nbFavorites));
+
         ressources.addAll(ressourceDao.getAllResourcesByTeacherId(3));
-
-
         ressourcesrec.setItems(ressources);
 
-        // Supprimer le fond blanc
         ressourcesrec.setStyle("-fx-background-color: transparent; -fx-control-inner-background: transparent;");
-
         ressourcesrec.setCellFactory(listView -> new ListCell<>() {
             private final HBox content;
             private final Label titleLabel;
@@ -118,9 +113,11 @@ public class DashboardStudentController {
 
                 });
 
+
                 content = new HBox(10, titleLabel, consultButton);
                 content.setAlignment(Pos.CENTER_LEFT);
             }
+
 
             @Override
             protected void updateItem(Ressource item, boolean empty) {
@@ -137,11 +134,37 @@ public class DashboardStudentController {
     }
 
     @FXML
+    private void handleFilterButton(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/projet/filtrage.fxml"));
+            Parent root = loader.load();
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Filtrage");
+            stage.initOwner(((Node) event.getSource()).getScene().getWindow());
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            showAlert("Erreur", "Impossible d'ouvrir la fenêtre de filtrage", e.getMessage());
+        }
+    }
+
+    private void showAlert(String title, String header, String content) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(title);
+        alert.setHeaderText(header);
+        alert.setContentText(content);
+        alert.showAndWait();
+    }
+
+
+
+    @FXML
     private void handleTerminees(ActionEvent event)
     {
         try {
             ObservableList<Ressource> terminees = FXCollections.observableArrayList(
-                    ressourceDao.getResourcesByStatus(currentStudentId,"Terminée")
+                    ressourceDao.getResourcesByStatus(currentStudentId,"Terminee")
             );
             terminées.setItems(terminees);
         } catch (SQLException e) {
@@ -153,7 +176,7 @@ public class DashboardStudentController {
     {
         try {
             ObservableList<Ressource> favoris = FXCollections.observableArrayList(
-                    ressourceDao.getResourcesByStatus(currentStudentId,"Enregistrée")
+                    ressourceDao.getResourcesByStatus(currentStudentId,"Favoris")
             );
             Favoris.setItems(favoris);
         } catch (SQLException e) {
@@ -171,7 +194,6 @@ public class DashboardStudentController {
         stage.show();
     }
 
-    public void handleFilterButton(ActionEvent actionEvent) {
-        // À implémenter
+    public void appliquerFiltres(ActionEvent actionEvent) {
     }
 }

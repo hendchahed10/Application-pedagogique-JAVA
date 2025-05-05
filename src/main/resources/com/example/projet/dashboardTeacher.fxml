@@ -3,13 +3,15 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
+<?import javafx.collections.FXCollections?>
+<?import java.lang.String?>
 
 <BorderPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.example.projet.Controller.DashboardTeacherController" style="-fx-background-color: linear-gradient(to right, #E3F2FD, #BBDEFB);">
 
    <top>
       <VBox>
-         <Label text="Liste Ressources Créées"
+         <Label text="Liste Ressources Crées"
                 style="-fx-text-fill: #0D47A1; -fx-font-size: 16px; -fx-font-weight: bold;"/>
          <BorderPane.margin>
             <Insets left="20.0" top="20.0" right="20.0"/>
@@ -32,18 +34,22 @@
                 style="-fx-text-fill: #1565C0; -fx-font-size: 26px; -fx-font-weight: bold;"/>
 
          <HBox spacing="15" alignment="CENTER">
-            <Button fx:id="nbStudentsBtn" text="NB étudiants"
-                    style="-fx-font-size: 14px; -fx-background-color: #E3F2FD; -fx-border-color: #90CAF9;-fx-border-radius: 5"
-                    prefWidth="150" prefHeight="80"/>
-            <Button fx:id="nbResourcesBtn" text="NB Ressources créées"
-                    style="-fx-font-size: 14px; -fx-background-color: #E3F2FD; -fx-border-color: #90CAF9;-fx-border-radius: 5"
-                    prefWidth="150" prefHeight="80"/>
-            <Button fx:id="averageRatingBtn" text="Note Moyenne"
-                    style="-fx-font-size: 14px; -fx-background-color: #E3F2FD; -fx-border-color: #90CAF9;-fx-border-radius: 5"
-                    prefWidth="150" prefHeight="80"/>
-            <Button fx:id="nbViewsBtn" text="NB Vues ressources"
-                    style="-fx-font-size: 14px; -fx-background-color: #E3F2FD; -fx-border-color: #90CAF9;-fx-border-radius: 5"
-                    prefWidth="150" prefHeight="80"/>
+            <VBox alignment="CENTER" style="-fx-background-color: #BBDEFB; -fx-background-radius: 15;" prefWidth="150" prefHeight="80">
+               <Label fx:id="nbStudentsLabel" text="" style="-fx-font-size: 24;" />
+               <Label text="NB étudiants"/>
+            </VBox>
+            <VBox alignment="CENTER" style="-fx-background-color: #BBDEFB; -fx-background-radius: 15;" prefWidth="150" prefHeight="80">
+               <Label fx:id="nbResourcesLabel" text="" style="-fx-font-size: 24;" />
+               <Label text="NB Ressources "/>
+            </VBox>
+            <VBox alignment="CENTER" style="-fx-background-color: #BBDEFB; -fx-background-radius: 15;" prefWidth="150" prefHeight="80">
+               <Label fx:id="averageRatingLabel" text="" style="-fx-font-size: 24;" />
+               <Label text="Note Moyen "/>
+            </VBox>
+            <VBox alignment="CENTER" style="-fx-background-color: #BBDEFB; -fx-background-radius: 15;" prefWidth="150" prefHeight="80">
+               <Label fx:id="nbFavorisLabel" text="" style="-fx-font-size: 24;" />
+               <Label text="NB Ressources Favoris "/>
+            </VBox>
          </HBox>
 
          <VBox spacing="15" style="-fx-padding: 20; -fx-background-color: #FAFAFA; -fx-border-color: #B0BEC5; -fx-border-radius: 5; -fx-background-radius: 5;">
@@ -59,22 +65,36 @@
                <Label text="Titre:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
                <TextField fx:id="titleField" promptText="Entrez le titre" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
 
-               <Label text="Description:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
-               <TextArea fx:id="descriptionArea" promptText="Entrez la description"
-                         prefRowCount="3" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+               <Label text="Catégorie:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+               <ComboBox fx:id="categoryComboBox" promptText="Sélectionnez une catégorie" GridPane.rowIndex="1" GridPane.columnIndex="1">
+                  <items>
+                     <FXCollections fx:factory="observableArrayList">
+                        <String fx:value="Informatique"/>
+                        <String fx:value="Science"/>
+                        <String fx:value="Gestion"/>
+                        <String fx:value="Economie"/>
+                        <String fx:value="Littérature"/>
+                        <String fx:value="Mathématiques"/>
+                     </FXCollections>
+                  </items>
+               </ComboBox>
 
-               <Label text="Difficulté:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+               <Label text="Description:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+               <TextArea fx:id="descriptionArea" promptText="Entrez la description"
+                         prefRowCount="3" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+               <Label text="Difficulté:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
                <fx:define>
                   <ToggleGroup fx:id="difficultyGroup" />
                </fx:define>
-               <HBox spacing="10" GridPane.rowIndex="2" GridPane.columnIndex="1">
+               <HBox spacing="10" GridPane.rowIndex="3" GridPane.columnIndex="1">
                   <RadioButton text="Facile" toggleGroup="$difficultyGroup"/>
                   <RadioButton text="Moyen" toggleGroup="$difficultyGroup"/>
                   <RadioButton text="Difficile" toggleGroup="$difficultyGroup"/>
                </HBox>
 
-               <Label text="Document:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
-               <HBox spacing="10" GridPane.rowIndex="3" GridPane.columnIndex="1">
+               <Label text="Document:" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+               <HBox spacing="10" GridPane.rowIndex="4" GridPane.columnIndex="1">
                   <TextField fx:id="documentField" promptText="Chemin du fichier" prefWidth="200"/>
                   <Button text="Télécharger" onAction="#handleDownload"
                           style="-fx-background-color: #1976D2; -fx-text-fill: white;"/>

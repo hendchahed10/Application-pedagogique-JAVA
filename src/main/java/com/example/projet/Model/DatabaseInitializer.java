@@ -7,7 +7,7 @@ import java.sql.Statement;
 
 public class DatabaseInitializer {
     public static void main(String[] args) {
-        String url = "jdbc:sqlite:C:\\IdeaProjects\\projet_javadatabase.db";
+        String url = "jdbc:sqlite:C:/IdeaProjects/Javads2/database.db";
         String[] sqlStatements = {
                 "CREATE TABLE IF NOT EXISTS Utilisateur (" +
                         "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
@@ -34,6 +34,7 @@ public class DatabaseInitializer {
                         "FOREIGN KEY (enseignant_id) REFERENCES Enseignant(id_enseignant)" +
                         ")",
 
+
                 "CREATE TABLE IF NOT EXISTS Avis (" +
                         "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
                         "etudiant_id INTEGER NOT NULL, " +
@@ -49,11 +50,12 @@ public class DatabaseInitializer {
                         "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
                         "etudiant_id INTEGER NOT NULL, " +
                         "ressource_id INTEGER NOT NULL, " +
+                        "note DOUBLE, " +
                         "date_consultation TEXT, " +
                         "date_enregistrement TEXT, " +
                         "date_completion TEXT, " +
-                        "statut TEXT CHECK(statut IN ('Favorite', 'Terminée')), " +
-                        "FOREIGN KEY (etudiant_id) REFERENCES Etudiant(id_etudiant), " +
+                        "statut TEXT CHECK(statut IN ( 'Favoris', 'Terminee')), " +
+                        "FOREIGN KEY (etudiant_id) REFERENCES Utilisateur(id), " +
                         "FOREIGN KEY (ressource_id) REFERENCES Ressource(id), " +
                         "UNIQUE(etudiant_id, ressource_id, statut)" +
                         ")",
@@ -63,17 +65,12 @@ public class DatabaseInitializer {
                 "CREATE INDEX IF NOT EXISTS idx_interaction_ressource ON ResourceInteraction(ressource_id)"
         };
 
-
         try (Connection conn = DriverManager.getConnection(url);
              Statement stmt = conn.createStatement()) {
-
-            // Exécution de toutes les commandes SQL
             for (String sql : sqlStatements) {
                 stmt.execute(sql);
             }
-            System.out.println("[SUCCÈS] Base de données initialisée avec les tables :");
-            System.out.println("- Utilisateur, Etudiant, Enseignant");
-            System.out.println("- Ressource, Avis, ResourceInteraction");
+            System.out.println("BDD initialisé avec succées ");
 
         } catch (SQLException e) {
             System.err.println("[ERREUR] Initialisation de la BDD : " + e.getMessage());
