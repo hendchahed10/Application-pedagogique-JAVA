@@ -1,6 +1,11 @@
 package com.example.projet.Controller;
 
+import com.example.projet.Dao.EnseignantDao;
+import com.example.projet.Dao.RessourceDao;
+import com.example.projet.Dao.UtilisateurDao;
 import com.example.projet.Model.Ressource;
+import com.example.projet.Model.UserModel;
+import com.example.projet.TestConnection;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -14,6 +19,7 @@ import javafx.scene.layout.HBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import java.io.File;
+import java.sql.SQLException;
 
 public class DashboardTeacherController {
 
@@ -30,9 +36,16 @@ public class DashboardTeacherController {
 
     private ObservableList<Ressource> ressources = FXCollections.observableArrayList();
     private Ressource selectedRessource = null;
+    private int currentTeacherId;
+    private RessourceDao ressourceDao;
+    public DashboardTeacherController(){
+        ressourceDao=new RessourceDao();
+    }
 
     @FXML
     public void initialize() {
+        UserModel user = LoginController.getCurrentuser();
+        currentTeacherId = user.getId();
         ressourceListView.setItems(ressources);
 
         ressourceListView.setCellFactory(listView -> new ListCell<>() {
@@ -113,7 +126,7 @@ public class DashboardTeacherController {
     }
 
     @FXML
-    private void handleAddButton(ActionEvent event) {
+    private void handleAddButton(ActionEvent event) throws SQLException {
         String title = titleField.getText().trim();
         String description = descriptionArea.getText().trim();
         String document = documentField.getText().trim();
@@ -138,8 +151,9 @@ public class DashboardTeacherController {
             ressourceListView.refresh();
             selectedRessource = null;
         } else {
-            Ressource newRessource = new Ressource(title, description, difficulte, document);
+            Ressource newRessource = new Ressource(title, description, difficulte, document,currentTeacherId);
             ressources.add(newRessource);
+            ressourceDao.ajouterRessource(newRessource);
         }
 
         titleField.clear();

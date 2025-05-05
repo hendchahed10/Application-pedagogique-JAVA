@@ -1,22 +1,29 @@
 package com.example.projet.Controller;
+
 import com.example.projet.Model.*;
 import com.example.projet.Dao.*;
-
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.*;
+import javafx.geometry.Pos;
 import javafx.scene.*;
-import javafx.stage.*;
+import javafx.scene.control.*;
+import javafx.scene.layout.HBox;
+import javafx.stage.Stage;
 import java.io.*;
 import java.util.List;
 import java.sql.*;
-import javafx.scene.control.*;
 
 public class DashboardStudentController {
-    private ProgressionDao prog;
+    private RessourceDao ressourceDao;
     private RecommendationEngine recommendation;
+    private RessourceController ressourceController;
+    private UtilisateurDao utilisateurDao;
+    private int currentStudentId;
 
     @FXML
-    private Label consultedLabel;
+    private Label statistiquesLabel;
     @FXML
     private Label completedLabel;
     @FXML
@@ -25,72 +32,146 @@ public class DashboardStudentController {
     private Button dashboardBtn, termineesBtn, favorisBtn, logoutBtn;
     @FXML
     private ChoiceBox<String> filterChoiceBox;
+    @FXML
+    private ListView<Ressource> ressourcesrec;
+    private ListView<Ressource> terminées;
+    private ListView<Ressource> Favoris;
+    private ObservableList<Ressource> ressources = FXCollections.observableArrayList();
 
-    public double ObtenirStatistiquesProgression(int idEtudiant) throws SQLException {
-        int nbEnregistrées=prog.NbRessourcesEnregistrees(idEtudiant);
-        int nbTerminées=prog.NbRessourcesTerminees(idEtudiant);
-        return (nbTerminées/nbEnregistrées)*100;
+    public DashboardStudentController() {
+        ressourceDao = new RessourceDao();
+        //recommendation = new RecommendationEngine();
+        ressourceController = new RessourceController();
+        utilisateurDao= new UtilisateurDao();
     }
-    /*public double NbRessourcesConsultées(int idEtudiant)
+
+    @FXML
+    public void initialize() throws SQLException {
+        UserModel user = LoginController.getCurrentuser();
+        currentStudentId = user.getId();
+        int nb_favorites = ressourceDao.NbRessourcesTerminees(currentStudentId);
+        int nb_terminées = ressourceDao.NbRessourcesFavories(currentStudentId);
+        double statprog = 0;
+        if (nb_favorites != 0)
+            statprog = (nb_terminées /  nb_favorites) *100;
+        statistiquesLabel.setText(String.valueOf(statprog+"%"));
+        completedLabel.setText(String.valueOf(nb_terminées));
+        savedLabel.setText(String.valueOf(nb_favorites));
+        // Charger toutes les ressources
+        ressources.addAll(ressourceDao.getAllResourcesByTeacherId(3));
+
+
+        ressourcesrec.setItems(ressources);
+
+        // Supprimer le fond blanc
+        ressourcesrec.setStyle("-fx-background-color: transparent; -fx-control-inner-background: transparent;");
+
+        ressourcesrec.setCellFactory(listView -> new ListCell<>() {
+            private final HBox content;
+            private final Label titleLabel;
+            private final Button consultButton;
+            private final Button termineesBtn=new Button("Terminées");
+            private final Button favButton = new Button("Favoris");
+
+            {
+                titleLabel = new Label();
+                consultButton = new Button("Consulter");
+
+                consultButton.setStyle("-fx-background-color: #2196F3; -fx-text-fill: white;");
+
+                consultButton.setOnAction(event -> {
+                            Ressource currentRessource = getItem(); // ← on récupère la ressource courante
+                            int id = currentRessource.getId(); //id de la ressource courante
+                            //String catégorie= currentRessource.
+                            String titre = currentRessource.getTitre(); //titre de la ressource courante
+                            String desc = currentRessource.getDescription(); //description de la ressource courante
+                            String difficulté = currentRessource.getDifficulte(); //diffuculté de la ressource courante
+                            String url = currentRessource.getDocument(); //url de la ressource courante
+                            String enseignant;
+                            try {
+                                enseignant = utilisateurDao.getNameById(currentRessource.getId_enseignant()); //nom de l'enseignant de la ressource courante
+                            } catch (SQLException e) {
+                                throw new RuntimeException(e);
+                            }
+
+                            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/projet/ressource.fxml"));
+                            Parent root;
+                            try {
+                                root = loader.load();
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            }
+                    RessourceController ressourceController = loader.getController();
+                    // Transmission du titre de la ressource en question au champ titre de l'interface ressource
+                    ressourceController.setTitre(titre);
+                    ressourceController.setDifficulté(difficulté);
+                    ressourceController.setDescription(desc);
+                    ressourceController.setDocument(url);
+                    ressourceController.setEnseignant(enseignant);
+                    ressourceController.initialize();
+                    Stage stage = new Stage();
+                    stage.setScene(new Scene(root));
+                    stage.showAndWait();
+                    ressourceController.handleFavoris(event);
+                    ressourceController.handleTermine(event);
+
+
+                });
+
+                content = new HBox(10, titleLabel, consultButton);
+                content.setAlignment(Pos.CENTER_LEFT);
+            }
+
+            @Override
+            protected void updateItem(Ressource item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setGraphic(null);
+                } else {
+                    titleLabel.setText(item.getTitre());
+                    setGraphic(content);
+                }
+
+            }
+        });
+    }
+
+    @FXML
+    private void handleTerminees(ActionEvent event)
     {
-        return prog.NbRessourcesConsultées(idEtudiant);
+        try {
+            ObservableList<Ressource> terminees = FXCollections.observableArrayList(
+                    ressourceDao.getResourcesByStatus(currentStudentId,"Terminée")
+            );
+            terminées.setItems(terminees);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
-    public double NbRessourcesEnregistrées(int idEtudiant)  {
-        return prog.NbRessourcesEnregistrees(idEtudiant);
-    }
-    public double NbRessourcesTerminées(int idEtudiant)  {
-        return prog.NbRessourcesTerminees(idEtudiant);
-    }*/
-
-    public void EnregistrerRessource (int idEtudiant,int idRessource)
+    @FXML
+    private void handleFavoris(ActionEvent event)
     {
-        prog.EnregistrerRessource(idEtudiant, idRessource);
-    }
-    public void MarquerCommeTerminéeRessource(int idEtudiant,int idRessource)
-    {
-        prog.TerminerRessource(idEtudiant, idRessource);
-    }
-
-    @FXML
-    private void initialize() {
-        filterChoiceBox.setValue("Filtres");
-    }
-
-    @FXML
-    private void handleConsulter(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("ressource.fxml"));
-        Stage stage = new Stage();
-        stage.setScene(new Scene(loader.load()));
-        stage.show();
-    }
-
-    @FXML
-    private void handleDashboard(ActionEvent event) {
-
-    }
-
-    @FXML
-    private void handleTerminees(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("listeTerminees.fxml"));
-        Stage stage = new Stage();
-        stage.setScene(new Scene(loader.load()));
-        stage.show();
-    }
-
-    @FXML
-    private void handleFavoris(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("listeFavoris.fxml"));
-        Stage stage = new Stage();
-        stage.setScene(new Scene(loader.load()));
-        stage.show();
+        try {
+            ObservableList<Ressource> favoris = FXCollections.observableArrayList(
+                    ressourceDao.getResourcesByStatus(currentStudentId,"Enregistrée")
+            );
+            Favoris.setItems(favoris);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            e.getMessage();
+        }
     }
 
     @FXML
     private void handleLogout(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/projet/acceuil.fxml"));
         Scene scene = new Scene(loader.load());
-        Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(scene);
         stage.show();
+    }
+
+    public void handleFilterButton(ActionEvent actionEvent) {
+        // À implémenter
     }
 }

@@ -33,7 +33,7 @@
                 style="-fx-background-color: #2196F3; -fx-text-fill: white; -fx-font-size: 15px; -fx-font-weight: bold; -fx-pref-width: 250px; -fx-background-radius: 6px; -fx-padding: 10px;"/>
 
         <Label fx:id="registerMessage" text=""
-               style="-fx-text-fill: red; -fx-font-size: 13px;"/>
+               style="-fx-text-fill: blue; -fx-font-size: 13px;"/>
 
         <Hyperlink text="Vous avez déjà un compte ? Se connecter" fx:id="loginLink" onAction="#goToLogin"
                    style="-fx-font-size: 12px; -fx-text-fill: #1976D2;"/>

@@ -7,7 +7,7 @@ import java.sql.Statement;
 
 public class DatabaseInitializer {
     public static void main(String[] args) {
-        String url = "jdbc:sqlite:C:/IdeaProjects/projet/database.db";
+        String url = "jdbc:sqlite:C:\\IdeaProjects\\projet_javadatabase.db";
         String[] sqlStatements = {
                 "CREATE TABLE IF NOT EXISTS Utilisateur (" +
                         "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
@@ -26,6 +26,7 @@ public class DatabaseInitializer {
                 "CREATE TABLE IF NOT EXISTS Ressource (" +
                         "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
                         "titre TEXT NOT NULL, " +
+                        "categorie VARCHAR(255), "+
                         "description TEXT, " +
                         "difficulte TEXT CHECK(difficulte IN ('Facile', 'Moyen', 'Difficile')), " +
                         "document TEXT, " +
@@ -51,7 +52,7 @@ public class DatabaseInitializer {
                         "date_consultation TEXT, " +
                         "date_enregistrement TEXT, " +
                         "date_completion TEXT, " +
-                        "statut TEXT CHECK(statut IN ('Consultée', 'Enregistrée', 'Terminée')), " +
+                        "statut TEXT CHECK(statut IN ('Favorite', 'Terminée')), " +
                         "FOREIGN KEY (etudiant_id) REFERENCES Etudiant(id_etudiant), " +
                         "FOREIGN KEY (ressource_id) REFERENCES Ressource(id), " +
                         "UNIQUE(etudiant_id, ressource_id, statut)" +
@@ -78,4 +79,5 @@ public class DatabaseInitializer {
             System.err.println("[ERREUR] Initialisation de la BDD : " + e.getMessage());
         }
     }
+
 }

@@ -1,6 +1,7 @@
 package com.example.projet.Model;
 
 public class UserModel {
+    int id;
     private String nom;
     private String email;
     private String motDePasse;
@@ -8,17 +9,25 @@ public class UserModel {
 
     // Constructeur
     public UserModel(int id, String nom, String email, String motDePasse, String role) {
+        this.id=id;
         this.nom = nom;
         this.email = email;
         this.motDePasse = motDePasse;
         this.role = role;
     }
-
-    public UserModel() {
+    public UserModel(){
 
     }
-
     // Getters et setters
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public String getNom() {
         return nom;
     }

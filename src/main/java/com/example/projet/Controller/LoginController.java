@@ -19,10 +19,12 @@ public class LoginController {
     @FXML private PasswordField password;
     @FXML private Label messageLabel;
 
-    private UtilisateurDao utilisateurDAO;
+    private UtilisateurDao utilisateurDao;
+    private static UserModel currentuser;
 
     public LoginController() {
-        utilisateurDAO = new UtilisateurDao();
+        utilisateurDao=new UtilisateurDao();
+        currentuser=new UserModel();
     }
 
     @FXML
@@ -35,10 +37,11 @@ public class LoginController {
             return;
         }
 
-        UserModel user = utilisateurDAO.getUtilisateurByEmailAndPassword(email, motDePasse);
+        UserModel user = utilisateurDao.getUtilisateurByEmailAndPassword(email, motDePasse);
 
         if (user != null) {
             messageLabel.setText("Bienvenue " + user.getNom() + " (" + user.getRole() + ")");
+            currentuser = user;
 
             try {
                 if (user instanceof TeacherModel) {
@@ -66,5 +69,9 @@ public class LoginController {
             e.printStackTrace();
             messageLabel.setText("Erreur lors du changement de vue.");
         }
+    }
+
+    public static UserModel getCurrentuser() {
+        return currentuser;
     }
 }

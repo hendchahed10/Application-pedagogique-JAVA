@@ -7,12 +7,13 @@ import com.example.projet.Model.TeacherModel;
 import java.sql.*;
 
 public class UtilisateurDao {
-    private static final String URL = "jdbc:sqlite:C:/IdeaProjects/projet/database.db";
-    public UtilisateurDao() {}
+    private static final String URL = "jdbc:sqlite:C:/IdeaProjects/projet_java/database.db";
+
+    public UtilisateurDao() {
+    }
 
     public UtilisateurDao(String fullName, String email, String password, String role) {
     }
-
 
 
     public static Connection connect() {
@@ -80,39 +81,43 @@ public class UtilisateurDao {
 
         // Vérifier si c'est un étudiant ou un enseignant pour définir la requête SQL
         if (utilisateur instanceof StudentModel) {
-            StudentModel student = (StudentModel) utilisateur;
-            sql = "INSERT INTO Utilisateur(nom, email, motDePasse, role) VALUES (?, ?, ?, ?)";
+            if (utilisateur instanceof StudentModel) {
+                StudentModel student = (StudentModel) utilisateur;
+                sql = "INSERT INTO Utilisateur(nom, email, motDePasse, role) VALUES (?, ?, ?, ?)";
 
-            try (Connection conn = connect();
-                 PreparedStatement pstmt = conn.prepareStatement(sql)) {
-                pstmt.setString(1, student.getNom());
-                pstmt.setString(2, student.getEmail());
-                pstmt.setString(3, student.getMotDePasse());
-                pstmt.setString(4, student.getRole());
-                pstmt.executeUpdate();
-                return true;
-            } catch (SQLException e) {
-                System.out.println("Erreur ajout étudiant : " + e.getMessage());
-                return false;
-            }
-        } else if (utilisateur instanceof TeacherModel) {
-            TeacherModel teacher = (TeacherModel) utilisateur;
-            sql = "INSERT INTO Utilisateur(nom, email, motDePasse, role) VALUES (?, ?, ?, ?)";
+                try (Connection conn = connect();
+                     PreparedStatement pstmt = conn.prepareStatement(sql)) {
+                    pstmt.setString(1, student.getNom());
+                    pstmt.setString(2, student.getEmail());
+                    pstmt.setString(3, student.getMotDePasse());
+                    pstmt.setString(4, student.getRole());
+                    pstmt.executeUpdate();
+                    return true;
+                } catch (SQLException e) {
+                    System.out.println("Erreur ajout étudiant : " + e.getMessage());
+                    return false;
+                }
 
-            try (Connection conn = connect();
-                 PreparedStatement pstmt = conn.prepareStatement(sql)) {
-                pstmt.setString(1, teacher.getNom());
-                pstmt.setString(2, teacher.getEmail());
-                pstmt.setString(3, teacher.getMotDePasse());
-                pstmt.setString(4, teacher.getRole());
-                pstmt.executeUpdate();
-                return true;
-            } catch (SQLException e) {
-                System.out.println("Erreur ajout enseignant : " + e.getMessage());
-                return false;
+            } else if (utilisateur instanceof TeacherModel) {
+                TeacherModel teacher = (TeacherModel) utilisateur;
+                sql = "INSERT INTO Utilisateur(nom, email, motDePasse, role) VALUES (?, ?, ?, ?)";
+
+                try (Connection conn = connect();
+                     PreparedStatement pstmt = conn.prepareStatement(sql)) {
+                    pstmt.setString(1, teacher.getNom());
+                    pstmt.setString(2, teacher.getEmail());
+                    pstmt.setString(3, teacher.getMotDePasse());
+                    pstmt.setString(4, teacher.getRole());
+                    pstmt.executeUpdate();
+                    return true;
+                } catch (SQLException e) {
+                    System.out.println("Erreur ajout enseignant : " + e.getMessage());
+                    return false;
+                }
             }
+            return false;
         }
-        return false;
+        return true;
     }
 
     public static boolean isEmailExist(String email) {
@@ -134,5 +139,21 @@ public class UtilisateurDao {
         return false; // L'email n'existe pas
     }
 
+    public String getNameById(int id) throws SQLException {
+        String sql = "SELECT nom FROM Utilisateur WHERE id = ?";
+        try (Connection conn = connect();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
+            pstmt.setInt(1, id);
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                return rs.getString("nom");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // e.getMessage(); ← Cette ligne ne fait rien ici
+        }
+        return "erreur"; // Valeur par défaut si rien trouvé ou exception levée
+    }
 }

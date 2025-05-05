@@ -12,8 +12,8 @@
             <padding>
                 <Insets top="20.0" right="20.0" bottom="20.0" left="20.0"/>
             </padding>
-            <Button text="Dashboard" fx:id="dashboardBtn" prefWidth="120" style="-fx-background-color: #90CAF9; -fx-text-fill: #0D47A1;"/>
-            <Button text="Terminées" fx:id="termineesBtn" prefWidth="120" style="-fx-background-color: #90CAF9; -fx-text-fill: #0D47A1;"/>
+            <Button text="Dashboard" fx:id="dashboardBtn"  onAction="#handleTerminees" prefWidth="120" style="-fx-background-color: #90CAF9; -fx-text-fill: #0D47A1;"/>
+            <Button text="Terminées" fx:id="termineesBtn"  onAction="#handleFavoris" prefWidth="120" style="-fx-background-color: #90CAF9; -fx-text-fill: #0D47A1;"/>
             <Button text="Favoris" fx:id="favorisBtn" prefWidth="120" style="-fx-background-color: #90CAF9; -fx-text-fill: #0D47A1;"/>
             <Button text="Déconnexion" fx:id="logoutBtn" onAction="#handleLogout" prefWidth="120" style="-fx-background-color: #90CAF9; -fx-text-fill: #0D47A1;"/>
         </VBox>
@@ -23,16 +23,16 @@
         <VBox spacing="20" alignment="TOP_CENTER" style="-fx-padding:20; -fx-border-color: #BBDEFB; -fx-border-width: 0 0 0 1; -fx-background-color: linear-gradient(to right, #E3F2FD, #BBDEFB);">
             <Label text="Tableau de bord étudiant" textFill="#0D47A1" style="-fx-font-size: 26px; -fx-font-weight: bold;" />
             <HBox spacing="30" alignment="CENTER">
-                <VBox alignment="CENTER" style="-fx-background-color: #BBDEFB; -fx-background-radius: 15;" prefWidth="150" prefHeight="80">
-                    <Label fx:id="consultedLabel" text="14" style="-fx-font-size: 24;" />
-                    <Label text="Nb ressources consultées"/>
+                <VBox alignment="CENTER" style="-fx-background-color: #9ce4ff; -fx-background-radius: 15;" prefWidth="150" prefHeight="80">
+                    <Label fx:id="statistiquesLabel" style="-fx-font-size: 24;" />
+                    <Label text="Progression"/>
                 </VBox>
                 <VBox alignment="CENTER" style="-fx-background-color: #BBDEFB; -fx-background-radius: 15;" prefWidth="150" prefHeight="80">
-                    <Label fx:id="completedLabel" text="5" style="-fx-font-size: 24;" />
+                    <Label fx:id="completedLabel" style="-fx-font-size: 24;" />
                     <Label text="Nb ressources terminées"/>
                 </VBox>
                 <VBox alignment="CENTER" style="-fx-background-color: #BBDEFB; -fx-background-radius: 15;" prefWidth="150" prefHeight="80">
-                    <Label fx:id="savedLabel" text="8" style="-fx-font-size: 24;" />
+                    <Label fx:id="savedLabel"  style="-fx-font-size: 24;" />
                     <Label text="Nb ressources enregistrées"/>
                 </VBox>
             </HBox>
@@ -40,17 +40,7 @@
             <HBox alignment="CENTER_LEFT" spacing="10">
                 <Label text="Liste des ressources recommandées" textFill="#0D47A1" style="-fx-font-weight: bold;"/>
                 <HBox alignment="CENTER_RIGHT" spacing="5">
-                    <ChoiceBox fx:id="filterChoiceBox">
-                        <items>
-                            <FXCollections fx:factory="observableArrayList">
-                                <String fx:value="Filtres"/>
-                                <String fx:value="Catégorie"/>
-                                <String fx:value="Popularité"/>
-                                <String fx:value="Difficulté"/>
-                                <String fx:value="Nouveautés"/>
-                            </FXCollections>
-                        </items>
-                    </ChoiceBox>
+                    <Button text="Filtrer" onAction="#handleFilterButton" style="-fx-background-color: #1976D2; -fx-text-fill: white;"/>
                 </HBox>
             </HBox>
 
@@ -58,9 +48,12 @@
                 <HBox spacing="10" alignment="CENTER_LEFT"
                       prefWidth="600"
                       style="-fx-background-color: #BBDEFB; -fx-background-radius: 15; -fx-padding: 10;">
-                    <Label text="Ressource 1" />
+                    <ListView fx:id="ressourcesrec" prefHeight="300.0" prefWidth="200.0">
+                        <BorderPane.margin>
+                            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                        </BorderPane.margin>
+                    </ListView>
                     <Pane HBox.hgrow="ALWAYS" />
-                    <Button text="Consulter" onAction="#handleConsulter" style="-fx-background-color: #1976D2; -fx-text-fill: white;"/>
                 </HBox>
             </VBox>
         </VBox>

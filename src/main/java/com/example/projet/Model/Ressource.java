@@ -1,16 +1,24 @@
 package com.example.projet.Model;
 
 public class Ressource {
+    private int id;
     private String titre;
     private String description;
     private String difficulte;
-    private String document;
+    private String urlpdf;
+    private int id_enseignant;
 
-    public Ressource(String titre, String description, String difficulte, String document) {
+
+    public Ressource(String titre, String description, String difficulte, String urlpdf, int id_enseignant) {
         this.titre = titre;
         this.description = description;
         this.difficulte = difficulte;
-        this.document = document;
+        this.urlpdf = urlpdf;
+        this.id_enseignant = id_enseignant;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public String getTitre() { return titre; }
@@ -22,11 +30,27 @@ public class Ressource {
     public String getDifficulte() { return difficulte; }
     public void setDifficulte(String difficulte) { this.difficulte = difficulte; }
 
-    public String getDocument() { return document; }
-    public void setDocument(String document) { this.document = document; }
+    public String getDocument() { return urlpdf; }
+    public void setDocument(String urlpdf) { this.urlpdf = urlpdf; }
 
     @Override
     public String toString() {
         return titre;
+    }
+
+    public String getUrlpdf() {
+        return urlpdf;
+    }
+
+    public void setUrlpdf(String urlpdf) {
+        this.urlpdf = urlpdf;
+    }
+
+    public int getId_enseignant() {
+        return id_enseignant;
+    }
+
+    public void setId_enseignant(int id_enseignant) {
+        this.id_enseignant = id_enseignant;
     }
 }

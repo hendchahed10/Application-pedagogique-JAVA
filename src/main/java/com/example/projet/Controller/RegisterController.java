@@ -36,7 +36,7 @@ public class RegisterController {
         String role = selectedRole != null ? selectedRole.getText().toLowerCase() : null;
         System.out.println("Rôle sélectionné : " + role);  // Ajout de l'impression pour debugger
 
-        if (role == null || !(role.equals("etudiant") || role.equals("enseignant"))) {
+        if (role == null || !(role.equals("etudiant") || !role.equals("enseignant"))) {
             registerMessage.setText("Rôle invalide !");
             return;
         }
