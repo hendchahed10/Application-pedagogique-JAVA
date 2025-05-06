@@ -11,7 +11,7 @@ public class RessourceDao {
     // Initialisation de la connexion à la base de données
     {
         try {
-            con = DriverManager.getConnection("jdbc:sqlite:C:/IdeaProjects/Javads2/database.db");
+            con = DriverManager.getConnection("jdbc:sqlite:C:/Users/damla/IdeaProjects/Javads22/database.db");
             System.out.println("Connexion réussie");
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -24,6 +24,102 @@ public class RessourceDao {
     // Constructeur par défaut
     public RessourceDao() {
     }
+
+//filtrage start
+    public List<Ressource> getFilteredResources(String difficulty, boolean sortByPopularity, String category) {
+        // Debugging the input values
+        System.out.println("Received values - Difficulty: " + difficulty + ", Popularity: " + sortByPopularity + ", Category: " + category);
+// houniii badalt Avis b ResourceInteraction
+        List<Ressource> resources = new ArrayList<>();
+        StringBuilder sql = new StringBuilder("SELECT r.*, IFNULL(AVG(a.note), 0) AS average_note " +
+                "FROM Ressource r LEFT JOIN ResourceInteraction a ON r.id = a.ressource_id WHERE 1=1 ");
+        List<Object> params = new ArrayList<>();
+
+        // Filter by difficulty if selected
+        if (difficulty != null && !difficulty.isEmpty()) {
+            sql.append("AND LOWER(r.difficulte) = LOWER(?) ");
+            params.add(difficulty);
+        }
+
+        // Filter by category if selected and not empty
+        if (category != null && !category.trim().isEmpty()) {
+            sql.append("AND LOWER(r.categorie) = LOWER(?) ");
+            params.add(category.trim()); // Ensure there's no leading or trailing space
+        } else {
+            System.out.println("Category is null or empty");
+        }
+
+        sql.append("GROUP BY r.id ");
+
+        // Sort by popularity if needed
+        if (sortByPopularity) {
+            sql.append("HAVING average_note >= 3.5 ");
+            sql.append("ORDER BY average_note DESC ");
+        } else {
+            sql.append("ORDER BY r.id ASC ");
+        }
+
+        // Debugging output
+        System.out.println("SQL Query: " + sql.toString());
+        System.out.println("Parameters: " + params);
+
+        try (PreparedStatement stmt = con.prepareStatement(sql.toString())) {
+            // Set parameters safely
+            for (int i = 0; i < params.size(); i++) {
+                stmt.setObject(i + 1, params.get(i));
+            }
+
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String titre = rs.getString("titre");
+                String description = rs.getString("description");
+                String difficulteDB = rs.getString("difficulte");
+                String document = rs.getString("document");
+                String categorieDB = rs.getString("categorie");
+                int id_enseignant = rs.getInt("enseignant_id");
+
+
+                Ressource res = new Ressource(id,titre, description, difficulteDB, document, categorieDB,id_enseignant);
+                resources.add(res);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return resources;
+    }
+    ///  filtrage end
+    //get ressource by id
+    public Ressource getRessourceById(int id) {
+        String sql = "SELECT * FROM Ressource WHERE id = ?";
+        try (PreparedStatement stmt = con.prepareStatement(sql)) {
+            stmt.setInt(1, id);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                int ressourceId = rs.getInt("id");
+                String titre = rs.getString("titre");
+                String description = rs.getString("description");
+                String difficulte = rs.getString("difficulte");
+                String document = rs.getString("document");
+                String categorie = rs.getString("categorie");
+                int idEnseignant = rs.getInt("enseignant_id");
+
+                return new Ressource(ressourceId,titre, description, difficulte, document, categorie,idEnseignant);
+            }
+        } catch (SQLException e) {
+            System.out.println("Erreur lors de la récupération de la ressource : " + e.getMessage());
+        }
+        return null;
+    }
+
+
+
+
+
+
+
+
 
     //Récupère l'identifiant d'une ressource à partir de son titre
     public int getIdByTitle(String nom_res) {

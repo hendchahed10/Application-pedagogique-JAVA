@@ -2,10 +2,13 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
 
 <VBox xmlns="http://javafx.com/javafx/21"
       xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="com.example.projet.Controller.DashboardStudentController"
+      fx:controller="com.example.projet.Controller.filtragecontroller"
+
       spacing="15"
       style="-fx-background-color: white; -fx-padding: 20; -fx-border-color: #E0E0E0; -fx-border-width: 1; -fx-border-radius: 5;">
 
@@ -15,11 +18,11 @@
     <VBox spacing="5" style="-fx-background-color: #F5F9FF; -fx-padding: 10; -fx-border-radius: 5;">
         <HBox spacing="15" alignment="CENTER_LEFT">
             <Label text="Difficulté :" style="-fx-font-weight: bold; -fx-text-fill: #0D47A1;"/>
-            <RadioButton text="Facile" toggleGroup="$difficulteGroup" userData="Facile"
+            <RadioButton fx:id="easyRadioButton" text="Facile" toggleGroup="$difficulteGroup" userData="Facile"
                          style="-fx-text-fill: #333333;"/>
-            <RadioButton text="Moyen" toggleGroup="$difficulteGroup" userData="Moyen"
+            <RadioButton fx:id="mediumRadioButton" text="Moyen" toggleGroup="$difficulteGroup" userData="Moyen"
                          style="-fx-text-fill: #333333;"/>
-            <RadioButton text="Difficile" toggleGroup="$difficulteGroup" userData="Difficile"
+            <RadioButton fx:id="hardRadioButton" text="Difficile" toggleGroup="$difficulteGroup" userData="Difficile"
                          style="-fx-text-fill: #333333;"/>
         </HBox>
     </VBox>
@@ -37,20 +40,20 @@
     <VBox spacing="5" style="-fx-background-color: #F5F9FF; -fx-padding: 10; -fx-border-radius: 5;">
         <HBox spacing="15">
             <Label text="Catégorie :" style="-fx-font-weight: bold; -fx-text-fill: #0D47A1;"/>
-            <RadioButton text="Informatique" toggleGroup="$categorieGroup" userData="Informatique"
+            <RadioButton fx:id="radioInformatique" text="Informatique" toggleGroup="$categorieGroup" userData="Informatique"
                          style="-fx-text-fill: #333333;"/>
-            <RadioButton text="Science" toggleGroup="$categorieGroup" userData="Science"
-                         style="-fx-text-fill: #333333;"/>
-            <RadioButton text="Gestion" toggleGroup="$categorieGroup" userData="Gestion"
-                         style="-fx-text-fill: #333333;"/>
+            <RadioButton  fx:id="radioScience" text="Science" toggleGroup="$categorieGroup" userData="Science"
+                          style="-fx-text-fill: #333333;"/>
+            <RadioButton  fx:id="radioGestion" text="Gestion" toggleGroup="$categorieGroup" userData="Gestion"
+                          style="-fx-text-fill: #333333;"/>
         </HBox>
         <HBox spacing="15" style="-fx-padding: 5 0 0 0;">
-            <RadioButton text="Economie" toggleGroup="$categorieGroup" userData="Economie"
-                         style="-fx-text-fill: #333333;"/>
-            <RadioButton text="Littérature" toggleGroup="$categorieGroup" userData="Littérature"
-                         style="-fx-text-fill: #333333;"/>
-            <RadioButton text="Mathématiques" toggleGroup="$categorieGroup" userData="Mathématiques"
-                         style="-fx-text-fill: #333333;"/>
+            <RadioButton  fx:id="radioEconomie" text="Economie" toggleGroup="$categorieGroup" userData="Economie"
+                          style="-fx-text-fill: #333333;"/>
+            <RadioButton  fx:id="radioLittérature" text="Littérature" toggleGroup="$categorieGroup" userData="Littérature"
+                          style="-fx-text-fill: #333333;"/>
+            <RadioButton  fx:id="radioMathématiques" text="Mathématiques" toggleGroup="$categorieGroup" userData="Mathématiques"
+                          style="-fx-text-fill: #333333;"/>
         </HBox>
     </VBox>
 
@@ -62,7 +65,7 @@
         </HBox>
     </VBox>
 
-    <Button fx:id="appliquerButton" text="Appliquer" onAction="#appliquerFiltres"
+    <Button fx:id="appliquerButton" text="Appliquer" onAction="#applyFilters"
             style="-fx-font-weight: bold; -fx-font-size: 14; -fx-background-color: #0D47A1; -fx-text-fill: white; -fx-padding: 8 20; -fx-background-radius: 5;"/>
 
     <fx:define>

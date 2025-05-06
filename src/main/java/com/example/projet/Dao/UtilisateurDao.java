@@ -7,7 +7,7 @@ import com.example.projet.Model.TeacherModel;
 import java.sql.*;
 
 public class UtilisateurDao {
-    private static final String URL = "jdbc:sqlite:C:/IdeaProjects/Javads2/database.db";
+    private static final String URL = "jdbc:sqlite:C:/Users/damla/IdeaProjects/Javads22/database.db";
 
     public UtilisateurDao() {
     }

@@ -2,6 +2,7 @@ package com.example.projet.Controller;
 
 import com.example.projet.Model.*;
 import com.example.projet.Dao.*;
+import com.example.projet.service.CSVExporter;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -11,10 +12,16 @@ import javafx.scene.*;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import java.io.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.sql.*;
+import org.apache.mahout.cf.taste.recommender.RecommendedItem;
+
+import com.example.projet.service.RecommendationService;
+import com.example.projet.service.CSVExporter;
 
 public class DashboardStudentController {
     private RessourceDao ressourceDao;
@@ -39,6 +46,14 @@ public class DashboardStudentController {
     private ListView<Ressource> termineesList;
     @FXML
     private ListView<Ressource> favorisList;
+    @FXML
+    private VBox recom;
+    @FXML
+    private ListView<Ressource> recommendationListView;
+
+
+    @FXML
+    private VBox filteredResourcesList;
     private ObservableList<Ressource> ressources = FXCollections.observableArrayList();
 
     public DashboardStudentController() {
@@ -49,13 +64,102 @@ public class DashboardStudentController {
     @FXML
     public void initialize() throws SQLException {
         setupMainListView();
-
         UserModel user = LoginController.getCurrentuser();
         currentStudentId = user.getId();
-
         updateStatistics();
-
+        try {
+            this.ressourceDao = new RessourceDao();
+            RecommendationService service = new RecommendationService();
+            List<RecommendedItem> recommendations = service.getRecommendations(currentStudentId, 5);
+            showRecommendations(recommendations);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
+    //recommendation system
+    private void showRecommendations(List<RecommendedItem> recommendations) {
+        List<Ressource> recommendedRessources = new ArrayList<>();
+
+        for (RecommendedItem item : recommendations) {
+            try {
+                Ressource ressource = ressourceDao.getRessourceById((int) item.getItemID());
+
+                recommendedRessources.add(ressource);
+            } catch (Exception e) {
+                System.err.println("Error fetching full ressource for itemID " + item.getItemID());
+                e.printStackTrace();
+            }
+        }
+
+        ObservableList<Ressource> observableList = FXCollections.observableArrayList(recommendedRessources);
+        recommendationListView.setItems(observableList);
+        recommendationListView.setCellFactory(listView -> new ListCell<>() {
+            @Override
+            protected void updateItem(Ressource ressource, boolean empty) {
+                super.updateItem(ressource, empty);
+                if (empty || ressource == null) {
+                    setGraphic(null);
+                } else {
+                    HBox resourceBox = new HBox(10);
+                    resourceBox.setAlignment(Pos.CENTER_LEFT);
+                    resourceBox.setStyle("-fx-background-color: #E3F2FD; -fx-background-radius: 15; -fx-padding: 10;");
+                    Label resLabel = new Label(ressource.getTitre()
+                             );
+                    resLabel.setStyle("-fx-font-size: 14px; -fx-text-fill: #1A237E;");
+                    Button detailsBtn = new Button("Consulter");
+                    detailsBtn.setStyle("-fx-background-color: #2196F3; -fx-text-fill: white; -fx-cursor: hand;");
+                    detailsBtn.setOnAction(e -> openResourceDetails(ressource));
+                    resourceBox.getChildren().addAll(resLabel, detailsBtn);
+                    setGraphic(resourceBox);
+                }
+            }
+        });
+    }
+    //recommendation system end here
+
+    @FXML
+    private void handleConsulter(Ressource res) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("ressource.fxml"));
+        Stage stage = new Stage();
+        stage.setScene(new Scene(loader.load()));
+        stage.show();
+    }
+    /// filtrage start here
+
+    @FXML
+    private void handleFilterButton(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/projet/filtrage.fxml"));
+        Parent root = loader.load();
+        filtragecontroller filterController = loader.getController();
+        filterController.setDashboardController(this);
+        Stage stage = new Stage();
+        stage.setScene(new Scene(root));
+        stage.setTitle("Filtrage");
+        stage.show();
+    }
+    private void displayFilteredResources(List<Ressource> resources) {
+        ObservableList<Ressource> observableResources = FXCollections.observableArrayList(resources);
+        ressourcesrec.setItems(observableResources);
+    }
+
+    public void filterResources(String difficulty, boolean sortByPopularity, String category) {
+        List<Ressource> filteredResources = ressourceDao.getFilteredResources(
+                difficulty,
+                sortByPopularity,
+                category
+        );
+
+        ressourcesrec.getItems().clear();
+        displayFilteredResources(filteredResources);
+        showListView(ressourcesrec);
+    }
+    //filtrage end here
+
+
+
+
+
+
 
     @FXML
     private void updateStatistics() throws SQLException {
@@ -74,33 +178,32 @@ public class DashboardStudentController {
         ressources.addAll(ressourceDao.getToutesLesRessources());
         ressourcesrec.setItems(ressources);
         ressourcesrec.setStyle("-fx-background-color: transparent; -fx-control-inner-background: #d4f3ff;");
+
+        // This cell factory should handle BOTH initial display and filtered results
         ressourcesrec.setCellFactory(lv -> new ListCell<>() {
-            private final HBox content;
-            private final Label titleLabel;
-            private final Button consultButton;
+            private final HBox content = new HBox(10);
+            private final Label titleLabel = new Label();
+            private final Button consultButton = new Button("Consulter");
 
             {
-                titleLabel = new Label();
-                consultButton = new Button("Consulter");
                 consultButton.setStyle("-fx-background-color: #2196F3; -fx-text-fill: white;");
-
                 consultButton.setOnAction(event -> {
-                    Ressource currentRessource = getItem(); //lors du clic sur le bouton "Consulter", récupération de la ressource en question
+                    Ressource currentRessource = getItem();
                     openResourceDetails(currentRessource);
                 });
 
-                content = new HBox(10, titleLabel, consultButton);
                 content.setAlignment(Pos.CENTER_LEFT);
+                content.getChildren().addAll(titleLabel, consultButton);
             }
 
             @Override
-            protected void updateItem(Ressource item, boolean empty) { //fonction qui gère l'affichage de chacune des ressources de la listView
-                super.updateItem(item, empty); //re-fixe l'ancien état visuel de la cellule avant de l'utiliser pour de nouvelles doonées
+            protected void updateItem(Ressource item, boolean empty) {
+                super.updateItem(item, empty);
                 if (empty || item == null) {
-                    setGraphic(null); //efface l'ancien contenu si la ressource est vide
+                    setGraphic(null);
                 } else {
-                    titleLabel.setText(item.getTitre()); //montre le titre de la ressource
-                    setGraphic(content); //affiche le titre de la ressource et le bouton "Consulter" si elle n'est pas vide
+                    titleLabel.setText(item.getTitre());
+                    setGraphic(content);
                 }
             }
         });
@@ -225,7 +328,5 @@ public class DashboardStudentController {
         stage.show();
     }
 
-    public void handleFilterButton(ActionEvent actionEvent) {
-        // À implémenter
-    }
+
 }
