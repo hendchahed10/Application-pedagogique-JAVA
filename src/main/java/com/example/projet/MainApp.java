@@ -55,14 +55,6 @@ public class MainApp extends Application {
         primaryStage.show();
     }
 
-    public static void showAddResourceView() throws Exception {
-        FXMLLoader fxmlLoader = new FXMLLoader(MainApp.class.getResource("/com/example/projet/addResource.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 900, 700);
-        applyStylesheet(scene);
-        primaryStage.setTitle("Ajout Ressource");
-        primaryStage.setScene(scene);
-        primaryStage.show();
-    }
 
     public static void showView(String fxmlFile) throws IOException {
         Parent root = FXMLLoader.load(MainApp.class.getResource("/" + fxmlFile));
