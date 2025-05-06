@@ -7,9 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RessourceDao {
-
     private Connection con;
-
     // Initialisation de la connexion à la base de données
     {
         try {
@@ -19,12 +17,10 @@ public class RessourceDao {
             throw new RuntimeException(e);
         }
     }
-
     // Constructeur avec injection de dépendance pour la connexion
     public RessourceDao(Connection con) {
         this.con = con;
     }
-
     // Constructeur par défaut
     public RessourceDao() {
     }
@@ -55,11 +51,14 @@ public class RessourceDao {
             ResultSet rs = stmt.executeQuery();
 
             while (rs.next()) {
-                Ressource resource = new Ressource(0, null, null, null, null, null, 0);
+                Ressource resource = new Ressource(0,null,null, null, null, null, 0);
+                resource.setId(rs.getInt("id"));
                 resource.setTitre(rs.getString("titre"));
+                resource.setCategorie(rs.getString("categorie"));
                 resource.setDescription(rs.getString("description"));
                 resource.setDifficulte(rs.getString("difficulte"));
                 resource.setDocument(rs.getString("document"));
+                resource.setId_enseignant(rs.getInt("enseignant_id"));
                 resources.add(resource);
             }
         } catch (SQLException e) {
@@ -71,31 +70,30 @@ public class RessourceDao {
 
     // ============== Méthodes spécifiques pour les étudiants ==============
 
-    //Ajoute une ressource aux favoris d'un étudiant
-    public void addFavorite(int studentId, int resourceId) throws SQLException {
-        String sql = "INSERT INTO ResourceInteraction (etudiant_id, ressource_id, date_consultation, date_enregistrement, date_completion, statut) VALUES (?, ?, DATETIME('now'), DATETIME('now'), DATETIME('now'), ?)";
+    public void addFavorite(int studentId, int resourceId,double note) throws SQLException {
+        String sql = "INSERT INTO ResourceInteraction (etudiant_id, ressource_id, note, date_consultation, date_enregistrement, date_completion, statut) VALUES (?, ?, ?, DATETIME('now'), DATETIME('now'), DATETIME('now'), ?)";
         try (PreparedStatement stmt = con.prepareStatement(sql)) {
             stmt.setInt(1, studentId);
             stmt.setInt(2, resourceId);
-            stmt.setString(3, "Enregistrée");
+            stmt.setDouble(3, note);
+            stmt.setString(4, "Favoris");
             stmt.executeUpdate();
         } catch (SQLException e) {
-            System.out.println("Erreur lors de l'ajout aux favoris : " + e.getMessage());
-            throw e;
+            e.printStackTrace();
+            System.out.println("ERREUR DANS L'INSERTION : " + e.getMessage());
         }
     }
-
-    //Marque une ressource comme terminée par un étudiant
-    public void addCompleted(int studentId, int resourceId) throws SQLException {
-        String sql = "INSERT INTO ResourceInteraction (etudiant_id, ressource_id, date_consultation, date_enregistrement, date_completion, statut) VALUES (?, ?, DATETIME('now'), DATETIME('now'), DATETIME('now'), ?)";
+    public void addCompleted(int studentId, int resourceId,double note) throws SQLException {
+        String sql = "INSERT INTO ResourceInteraction (etudiant_id, ressource_id, note, date_consultation, date_enregistrement, date_completion, statut) VALUES (?, ?, ?, DATETIME('now'), DATETIME('now'), DATETIME('now'), ?)";
         try (PreparedStatement stmt = con.prepareStatement(sql)) {
             stmt.setInt(1, studentId);
             stmt.setInt(2, resourceId);
-            stmt.setString(3, "Terminée");
+            stmt.setDouble(3, note);
+            stmt.setString(4, "Terminee");
             stmt.executeUpdate();
         } catch (SQLException e) {
-            System.out.println("Erreur lors du marquage comme terminée : " + e.getMessage());
-            throw e;
+            e.printStackTrace();
+            System.out.println("ERREUR DANS L'INSERTION : " + e.getMessage());
         }
     }
 
@@ -106,13 +104,14 @@ public class RessourceDao {
                 "JOIN ResourceInteraction ri ON r.id = ri.ressource_id " +
                 "WHERE ri.etudiant_id = ? AND ri.statut = ?";
 
+
         try (PreparedStatement stmt = con.prepareStatement(sql)) {
             stmt.setInt(1, studentId);
             stmt.setString(2, status);
             ResultSet rs = stmt.executeQuery();
 
             while (rs.next()) {
-                Ressource resource = new Ressource(0, null, null, null, null, null, 0);
+                Ressource resource = new Ressource(0,null, null,null,null,null,0);
                 resource.setTitre(rs.getString("titre"));
                 resource.setDescription(rs.getString("description"));
                 resource.setDifficulte(rs.getString("difficulte"));
@@ -123,9 +122,10 @@ public class RessourceDao {
         return resources;
     }
 
+
     //Compte le nombre de ressources favorites d'un étudiant
     public int NbRessourcesFavories(int idEtudiant) throws SQLException {
-        String sql = "SELECT COUNT(ressource_id) AS Total FROM ResourceInteraction WHERE etudiant_id= ? AND statut='Enregistrée'";
+        String sql = "SELECT COUNT(ressource_id) AS Total FROM ResourceInteraction WHERE etudiant_id= ? AND statut='Favoris'";
         try (PreparedStatement stmt = con.prepareStatement(sql)) {
             stmt.setInt(1, idEtudiant);
             ResultSet rs = stmt.executeQuery();
@@ -136,9 +136,23 @@ public class RessourceDao {
         return 0;
     }
 
+    public int getTotalRessources() {
+        String sql = "SELECT COUNT(*) FROM Ressource";
+
+        try (PreparedStatement stmt = con.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
+
+            return rs.next() ? rs.getInt(1) : 0;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return 0; // Ou lancez une exception personnalisée
+        }
+    }
+
     //Compte le nombre de ressources terminées par un étudiant
     public int NbRessourcesTerminees(int idEtudiant) throws SQLException {
-        String sql = "SELECT COUNT(ressource_id) AS Total FROM ResourceInteraction WHERE etudiant_id= ? AND statut='Terminée'";
+        String sql = "SELECT COUNT(ressource_id) AS Total FROM ResourceInteraction WHERE etudiant_id= ? AND statut='Terminee'";
         try (PreparedStatement stmt = con.prepareStatement(sql)) {
             stmt.setInt(1, idEtudiant);
             ResultSet rs = stmt.executeQuery();
@@ -150,6 +164,32 @@ public class RessourceDao {
     }
 
     // ============== Méthodes pour la gestion des ressources ==============
+
+    public List<Ressource> getToutesLesRessources() {
+        List<Ressource> ressources = new ArrayList<>();
+        String sql = "SELECT * FROM Ressource";
+
+        try (PreparedStatement stmt = con.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
+
+            while (rs.next()) {
+                Ressource r = new Ressource(
+                        rs.getInt("id"),
+                        rs.getString("titre"),
+                        rs.getString("categorie"),
+                        rs.getString("description"),
+                        rs.getString("difficulte"),
+                        rs.getString("document"),
+                        rs.getInt("enseignant_id")
+                );
+                ressources.add(r);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return ressources;
+    }
 
     //Récupère toutes les ressources d'un enseignant
 

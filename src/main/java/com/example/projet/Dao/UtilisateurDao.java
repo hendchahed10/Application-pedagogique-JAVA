@@ -152,7 +152,6 @@ public class UtilisateurDao {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            // e.getMessage(); ← Cette ligne ne fait rien ici
         }
         return "erreur"; // Valeur par défaut si rien trouvé ou exception levée
     }

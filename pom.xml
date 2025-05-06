@@ -33,7 +33,7 @@
       <version>3.49.1.0</version>
     </dependency>
 
-<dependency>
+    <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter-api</artifactId>
       <version>${junit.version}</version>
@@ -78,10 +78,10 @@
         </executions>
       </plugin>
     </plugins>
-      <resources>
-        <resource>
-          <directory>src/main/resources</directory>
-        </resource>
-      </resources>
+    <resources>
+      <resource>
+        <directory>src/main/resources</directory>
+      </resource>
+    </resources>
   </build>
 </project>

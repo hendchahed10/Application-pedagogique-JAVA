@@ -16,20 +16,16 @@ public class RessourceController {
     private int currentStudentId;
     UserModel user = LoginController.getCurrentuser();
 
-    @FXML
-    private TextField titreField;
-    @FXML
-    private TextField categorieField;
-    @FXML
-    private TextField descriptionField;
-    @FXML
-    private TextField difficulteField;
-    @FXML
-    private TextField documentField;
-    @FXML
-    private TextField enseignantField;
-    @FXML
-    private Spinner<Double> noteSpinner;
+    @FXML private TextField idField;
+    @FXML private TextField titreField;
+    @FXML private TextField categorieField;
+    @FXML private TextField descriptionField;
+    @FXML private TextField difficulteField;
+    @FXML private TextField documentField;
+    @FXML private TextField enseignantField;
+    @FXML private Spinner<Double> noteSpinner;
+
+
     public RessourceController()
     {
         ressourceDAO=new RessourceDao();
@@ -54,44 +50,41 @@ public class RessourceController {
     @FXML
     public void handleFavoris(ActionEvent actionEvent) {
         try {
-            // 1. Récupération de toutes les données
+            int id= Integer.parseInt(idField.getText());
             String titre = titreField.getText().trim();
             String categorie = categorieField.getText().trim();
             String description = descriptionField.getText().trim();
             String difficulte = difficulteField.getText().trim();
             String enseignant = enseignantField.getText().trim();
             Double note = noteSpinner.getValue();
-            int id_res= ressourceDAO.getIdByTitle(titre);
-            ressourceDAO.addFavorite(currentStudentId,id_res);
-            // Fermer la fenêtre
-            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-            stage.close();
+            ressourceDAO.addFavorite(currentStudentId,id,note);
+            System.out.println("Ressource ajoutée avec succès");
         }catch (SQLException e) {
-             e.getMessage();
+            e.getMessage();
             e.printStackTrace();
         }
-    }
 
+    }
 
     public void handleTermine(ActionEvent actionEvent) {
         try {
-            // 1. Récupération de toutes les données
+            int id= Integer.parseInt(idField.getText());
             String titre = titreField.getText().trim();
-            String categorie = categorieField.getText().trim();
+            String catégorie=categorieField.getText().trim();
             String description = descriptionField.getText().trim();
             String difficulte = difficulteField.getText().trim();
             String enseignant = enseignantField.getText().trim();
             Double note = noteSpinner.getValue();
-            int id_res= ressourceDAO.getIdByTitle(titre);
-            ressourceDAO.addCompleted(currentStudentId,id_res);
+            ressourceDAO.addCompleted(currentStudentId,id,note);
+            System.out.println("Ressource ajoutée avec succès");
         }catch (SQLException e) {
             e.getMessage();
             e.printStackTrace();
         }
     }
-    public void setTitre(String titre) {
-        titreField.setText(titre);
-    }
+    public void setId(int id){idField.setText(String.valueOf(id));}
+    public void setTitre(String titre) {titreField.setText(titre);}
+    public void setCategorie(String categorie){categorieField.setText(categorie);}
     public void setDescription(String desc) {
         descriptionField.setText(desc);
     }

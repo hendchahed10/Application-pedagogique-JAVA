@@ -2,23 +2,29 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.geometry.*?>
+<?import javafx.collections.FXCollections?>
 
-<BorderPane fx:controller="com.example.projet.Controller.DashboardStudentController" xmlns:fx="http://javafx.com/fxml" prefWidth="1000" prefHeight="600" style="-fx-background-color: linear-gradient(to right, #E3F2FD, #BBDEFB);">
+<BorderPane fx:controller="com.example.projet.Controller.DashboardStudentController"
+            xmlns:fx="http://javafx.com/fxml"
+            prefWidth="1000" prefHeight="600"
+            style="-fx-background-color: linear-gradient(to right, #E3F2FD, #BBDEFB);">
 
     <left>
         <VBox spacing="10" alignment="TOP_CENTER" style="-fx-background-color: #E3F2FD;">
             <padding>
                 <Insets top="20.0" right="20.0" bottom="20.0" left="20.0"/>
             </padding>
-            <Button text="Dashboard" fx:id="dashboardBtn"  onAction="#handleTerminees" prefWidth="120" style="-fx-background-color: #90CAF9; -fx-text-fill: #0D47A1;"/>
-            <Button text="Terminées" fx:id="termineesBtn"  onAction="#handleFavoris" prefWidth="120" style="-fx-background-color: #90CAF9; -fx-text-fill: #0D47A1;"/>
-            <Button text="Favoris" fx:id="favorisBtn" prefWidth="120" style="-fx-background-color: #90CAF9; -fx-text-fill: #0D47A1;"/>
+            <Button text="Dashboard" fx:id="dashboardBtn"  onAction="#handleDashboard" prefWidth="120" style="-fx-background-color: #90CAF9; -fx-text-fill: #0D47A1;"/>
+            <Button text="Terminées" fx:id="termineesBtn"  onAction="#handleTerminees" prefWidth="120" style="-fx-background-color: #90CAF9; -fx-text-fill: #0D47A1;"/>
+            <Button text="Favoris" fx:id="favorisBtn" onAction="#handleFavoris" prefWidth="120" style="-fx-background-color: #90CAF9; -fx-text-fill: #0D47A1;"/>
             <Button text="Déconnexion" fx:id="logoutBtn" onAction="#handleLogout" prefWidth="120" style="-fx-background-color: #90CAF9; -fx-text-fill: #0D47A1;"/>
         </VBox>
     </left>
 
     <center>
-        <VBox spacing="20" alignment="TOP_CENTER" style="-fx-padding:20; -fx-border-color: #BBDEFB; -fx-border-width: 0 0 0 1; -fx-background-color: linear-gradient(to right, #E3F2FD, #BBDEFB);">
+        <VBox spacing="20" alignment="TOP_CENTER"
+              style="-fx-padding:20; -fx-border-color: #BBDEFB; -fx-border-width: 0 0 0 1;
+                     -fx-background-color: linear-gradient(to right, #E3F2FD, #BBDEFB);">
             <Label text="Tableau de bord étudiant" textFill="#0D47A1" style="-fx-font-size: 26px; -fx-font-weight: bold;" />
             <HBox spacing="30" alignment="CENTER">
                 <VBox alignment="CENTER" style="-fx-background-color: #9ce4ff; -fx-background-radius: 15;" prefWidth="150" prefHeight="80">
@@ -34,26 +40,23 @@
                     <Label text="Nb ressources enregistrées"/>
                 </VBox>
             </HBox>
-
             <HBox alignment="CENTER_LEFT" spacing="10">
-                <Label text="Liste des ressources recommandées" textFill="#0D47A1" style="-fx-font-weight: bold;"/>
+                <Label fx:id="subtitleLabel" text="Liste des ressources recommandées"  textFill="#0D47A1" style="-fx-font-weight: bold;"/>
                 <HBox alignment="CENTER_RIGHT" spacing="5">
-                    <Button text="Filtrer" onAction="#handleFilterButton" style="-fx-background-color: #1976D2; -fx-text-fill: white;"/>
+                    <Button fx:id="filterButton" text="Filtrer" onAction="#handleFilterButton" style="-fx-background-color: #1976D2; -fx-text-fill: white;"/>
                 </HBox>
             </HBox>
 
-            <VBox spacing="10">
-                <HBox spacing="10" alignment="CENTER_LEFT"
-                      prefWidth="600"
-                      style="-fx-background-color: #BBDEFB; -fx-background-radius: 15; -fx-padding: 10;">
-                    <ListView fx:id="ressourcesrec" prefHeight="300.0" prefWidth="200.0">
-                        <BorderPane.margin>
-                            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
-                        </BorderPane.margin>
-                    </ListView>
-                    <Pane HBox.hgrow="ALWAYS" />
-                </HBox>
-            </VBox>
+            <StackPane fx:id="listContainer">
+                <!-- Liste principale des ressources reccommendées -->
+                <ListView fx:id="ressourcesrec" visible="true" managed="true"/>
+
+                <!-- Liste des ressources complétées (initiallement non visible) -->
+                <ListView fx:id="termineesList" visible="false" managed="false"/>
+
+                <!-- Liste des ressources favorites (initiallement non visible -->
+                <ListView fx:id="favorisList" visible="false" managed="false"/>
+            </StackPane>
         </VBox>
     </center>
 </BorderPane>
