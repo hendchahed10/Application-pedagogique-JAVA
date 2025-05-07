@@ -4,13 +4,11 @@ import com.example.projet.Dao.UtilisateurDao;
 import com.example.projet.Model.StudentModel;
 import com.example.projet.Model.UserModel;
 import com.example.projet.Model.TeacherModel;
-
-
 import com.example.projet.MainApp;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-
+import javafx.stage.Stage;
 import java.io.IOException;
 
 public class LoginController {
@@ -43,11 +41,14 @@ public class LoginController {
             messageLabel.setText("Bienvenue " + user.getNom() + " (" + user.getRole() + ")");
             currentuser = user;
 
+            Stage currentStage = (Stage) username.getScene().getWindow();
+            currentStage.close();
+
             try {
                 if (user instanceof TeacherModel) {
-                    MainApp.showView("com/example/projet/dashboardTeacher.fxml");
+                    MainApp.showTeacherDashboard();
                 } else if (user instanceof StudentModel) {
-                    MainApp.showView("com/example/projet/dashboardStudent.fxml");
+                    MainApp.showStudentDashboard();
                 } else {
                     messageLabel.setText("Email ou mot de passe incorrect.");
                 }
@@ -63,12 +64,9 @@ public class LoginController {
 
     @FXML
     private void onRegisterLinkClicked() {
-        try {
-            MainApp.showRegisterView();
-        } catch (Exception e) {
-            e.printStackTrace();
-            messageLabel.setText("Erreur lors du changement de vue.");
-        }
+        Stage currentStage = (Stage) username.getScene().getWindow();
+        currentStage.close();
+        MainApp.showRegisterView();
     }
 
     public static UserModel getCurrentuser() {

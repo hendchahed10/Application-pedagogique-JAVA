@@ -11,7 +11,7 @@ public class RessourceDao {
     // Initialisation de la connexion à la base de données
     {
         try {
-            con = DriverManager.getConnection("jdbc:sqlite:C:/Users/damla/IdeaProjects/Javads22/database.db");
+            con = DriverManager.getConnection("jdbc:sqlite:C:/IdeaProjects/Javads2/database.db");
             System.out.println("Connexion réussie");
         } catch (SQLException e) {
             throw new RuntimeException(e);

@@ -1,53 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.geometry.Pos?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Spinner?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.StackPane?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 
-<StackPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.projet.Controller.RessourceController" style="-fx-background-color: linear-gradient(to right, #E3F2FD, #BBDEFB);">
+<StackPane style="-fx-background-color: #E3F2FD;" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.projet.Controller.RessourceController">
 
-    <VBox alignment="CENTER_LEFT" spacing="15" style="-fx-background-color: #FFFFFF; -fx-border-radius: 10px; -fx-padding: 30px; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0, 0, 4);" maxWidth="400" maxHeight="500">
+    <VBox alignment="CENTER_LEFT" maxHeight="811.0" maxWidth="594.0" prefHeight="765.0" prefWidth="594.0" spacing="15" style="-fx-background-color: #E3F2FD; -fx-border-radius: 12px; -fx-padding: 30px; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 12, 0, 0, 5); -fx-border-color: #90CAF9; -fx-border-width: 1;">
         <padding>
             <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
         </padding>
 
-        <Label text="Détails de la ressource :" style="-fx-font-size: 18px; -fx-text-fill: #2196F3; -fx-font-weight: bold; -fx-padding: 5px;"/>
+        <Label style="-fx-font-size: 18px; -fx-text-fill: #1565C0; -fx-font-weight: bold; -fx-padding: 5px; -fx-font-family: 'Roboto';" text="Détails de la ressource :" />
 
-        <Label text="ID" style="-fx-font-size: 14px; -fx-text-fill: #333333;" />
-        <TextField fx:id="idField" style="-fx-font-size: 14px; -fx-padding: 8px; -fx-background-color: #FFFFFF; -fx-border-color: #2196F3; -fx-border-width: 1px; -fx-border-radius: 4px; -fx-pref-width: 200px;" />
+        <Label prefHeight="24.0" prefWidth="14.0" style="-fx-font-size: 14px; -fx-text-fill: #0D47A1; -fx-font-family: 'Roboto';" text="ID" />
+        <TextField fx:id="idField" style="-fx-font-size: 14px; -fx-padding: 8px; -fx-background-color: #E3F2FD; -fx-border-color: #90CAF9; -fx-border-width: 1px; -fx-border-radius: 8px; -fx-pref-width: 200px; -fx-font-family: 'Roboto';" />
 
-        <Label text="Titre" style="-fx-font-size: 14px; -fx-text-fill: #333333;" />
-        <TextField fx:id="titreField" style="-fx-font-size: 14px; -fx-padding: 8px; -fx-background-color: #FFFFFF; -fx-border-color: #2196F3; -fx-border-width: 1px; -fx-border-radius: 4px; -fx-pref-width: 200px;" />
+        <Label style="-fx-font-size: 14px; -fx-text-fill: #0D47A1; -fx-font-family: 'Roboto';" text="Titre" />
+        <TextField fx:id="titreField" style="-fx-font-size: 14px; -fx-padding: 8px; -fx-background-color: #E3F2FD; -fx-border-color: #90CAF9; -fx-border-width: 1px; -fx-border-radius: 8px; -fx-pref-width: 200px; -fx-font-family: 'Roboto';" />
 
-        <Label text="Catégorie" style="-fx-font-size: 14px; -fx-text-fill: #333333;" />
-        <TextField fx:id="categorieField" style="-fx-font-size: 14px; -fx-padding: 8px; -fx-background-color: #FFFFFF; -fx-border-color: #2196F3; -fx-border-width: 1px; -fx-border-radius: 4px; -fx-pref-width: 200px;" />
+        <Label style="-fx-font-size: 14px; -fx-text-fill: #0D47A1; -fx-font-family: 'Roboto';" text="Catégorie" />
+        <TextField fx:id="categorieField" style="-fx-font-size: 14px; -fx-padding: 8px; -fx-background-color: #E3F2FD; -fx-border-color: #90CAF9; -fx-border-width: 1px; -fx-border-radius: 8px; -fx-pref-width: 200px; -fx-font-family: 'Roboto';" />
 
-        <Label text="Description" style="-fx-font-size: 14px; -fx-text-fill: #333333;" />
-        <TextField fx:id="descriptionField" style="-fx-font-size: 14px; -fx-padding: 8px; -fx-background-color: #FFFFFF; -fx-border-color: #2196F3; -fx-border-width: 1px; -fx-border-radius: 4px; -fx-pref-width: 200px;" />
+        <Label style="-fx-font-size: 14px; -fx-text-fill: #0D47A1; -fx-font-family: 'Roboto';" text="Description" />
+        <TextField fx:id="descriptionField" style="-fx-font-size: 14px; -fx-padding: 8px; -fx-background-color: #E3F2FD; -fx-border-color: #90CAF9; -fx-border-width: 1px; -fx-border-radius: 8px; -fx-pref-width: 200px; -fx-font-family: 'Roboto';" />
 
-        <Label text="Difficulté" style="-fx-font-size: 14px; -fx-text-fill: #333333;" />
-        <TextField fx:id="difficulteField" style="-fx-font-size: 14px; -fx-padding: 8px; -fx-background-color: #FFFFFF; -fx-border-color: #2196F3; -fx-border-width: 1px; -fx-border-radius: 4px; -fx-pref-width: 200px;" />
+        <Label style="-fx-font-size: 14px; -fx-text-fill: #0D47A1; -fx-font-family: 'Roboto';" text="Difficulté" />
+        <TextField fx:id="difficulteField" style="-fx-font-size: 14px; -fx-padding: 8px; -fx-background-color: #E3F2FD; -fx-border-color: #90CAF9; -fx-border-width: 1px; -fx-border-radius: 8px; -fx-pref-width: 200px; -fx-font-family: 'Roboto';" />
 
-        <Label text="Enseignant" style="-fx-font-size: 14px; -fx-text-fill: #333333;" />
-        <TextField fx:id="enseignantField" style="-fx-font-size: 14px; -fx-padding: 8px; -fx-background-color: #FFFFFF; -fx-border-color: #2196F3; -fx-border-width: 1px; -fx-border-radius: 4px; -fx-pref-width: 200px;" />
+        <Label style="-fx-font-size: 14px; -fx-text-fill: #0D47A1; -fx-font-family: 'Roboto';" text="Enseignant" />
+        <TextField fx:id="enseignantField" style="-fx-font-size: 14px; -fx-padding: 8px; -fx-background-color: #E3F2FD; -fx-border-color: #90CAF9; -fx-border-width: 1px; -fx-border-radius: 8px; -fx-pref-width: 200px; -fx-font-family: 'Roboto';" />
 
-        <Label text="Document" style="-fx-font-size: 14px; -fx-text-fill: #333333;" />
-        <TextField fx:id="documentField" style="-fx-font-size: 14px; -fx-padding: 8px; -fx-background-color: #FFFFFF; -fx-border-color: #2196F3; -fx-border-width: 1px; -fx-border-radius: 4px; -fx-pref-width: 200px;" />
+        <Label style="-fx-font-size: 14px; -fx-text-fill: #0D47A1; -fx-font-family: 'Roboto';" text="Document" />
+        <TextField fx:id="documentField" style="-fx-font-size: 14px; -fx-padding: 8px; -fx-background-color: #E3F2FD; -fx-border-color: #90CAF9; -fx-border-width: 1px; -fx-border-radius: 8px; -fx-pref-width: 200px; -fx-font-family: 'Roboto';" />
 
         <HBox alignment="CENTER_LEFT" spacing="10">
-            <Label text="Attribuer note :" style="-fx-font-size: 14px; -fx-text-fill: #333333;" />
-            <Spinner fx:id="noteSpinner" editable="true" style="-fx-background-color: #FFFFFF; -fx-border-color: #2196F3; -fx-border-width: 1px; -fx-border-radius: 4px;" />
+            <Label style="-fx-font-size: 14px; -fx-text-fill: #0D47A1; -fx-font-family: 'Roboto';" text="Attribuer note :" />
+            <Spinner fx:id="noteSpinner" editable="true" prefHeight="27.0" prefWidth="256.0" style="-fx-background-color: #E3F2FD; -fx-border-color: #90CAF9; -fx-border-width: 1px; -fx-border-radius: 8px; -fx-font-family: 'Roboto';" />
         </HBox>
 
-        <HBox spacing="10" alignment="CENTER_RIGHT">
-            <Button text="Favoris" onAction="#handleFavoris" style="-fx-background-color: #2196F3; -fx-text-fill: white; -fx-font-size: 14px; -fx-font-weight: bold; -fx-padding: 8px 16px; -fx-background-radius: 4px; -fx-border-radius: 4px;"/>
-            <Button text="Terminé" onAction="#handleTermine" style="-fx-background-color: #2196F3; -fx-text-fill: white; -fx-font-size: 14px; -fx-font-weight: bold; -fx-padding: 8px 16px; -fx-background-radius: 4px; -fx-border-radius: 4px;"/>
+        <HBox alignment="CENTER_RIGHT" spacing="10">
+            <Button onAction="#handleFavoris" prefHeight="38.0" prefWidth="250.0" style="-fx-background-color: #1976D2; -fx-text-fill: white; -fx-font-size: 14px; -fx-font-weight: bold; -fx-padding: 8px 16px; -fx-background-radius: 8px; -fx-border-radius: 8px; -fx-font-family: 'Roboto'; -fx-border-color: #1565C0; -fx-border-width: 1;" text="Marquer comme Favoris" />
+            <Button onAction="#handleTermine" prefHeight="38.0" prefWidth="247.0" style="-fx-background-color: #1976D2; -fx-text-fill: white; -fx-font-size: 14px; -fx-font-weight: bold; -fx-padding: 8px 16px; -fx-background-radius: 8px; -fx-border-radius: 8px; -fx-font-family: 'Roboto'; -fx-border-color: #1565C0; -fx-border-width: 1;" text="Marquer comme Terminé" />
         </HBox>
     </VBox>
 </StackPane>

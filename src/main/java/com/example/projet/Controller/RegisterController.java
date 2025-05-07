@@ -4,8 +4,10 @@ import com.example.projet.Model.StudentModel;
 import com.example.projet.Dao.UtilisateurDao;
 import com.example.projet.MainApp;
 import com.example.projet.Model.TeacherModel;
+import com.example.projet.Model.UserModel;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.stage.Stage;
 
 public class RegisterController {
 
@@ -27,51 +29,59 @@ public class RegisterController {
 
     @FXML
     public void handleRegister() {
-        String fullName = fullNameField.getText();
-        String email = emailField.getText();
+        // Récupération des valeurs
+        String fullName = fullNameField.getText().trim();
+        String email = emailField.getText().trim();
         String password = passwordField.getText();
         RadioButton selectedRole = (RadioButton) roleGroup.getSelectedToggle();
-
-        // Vérifie le texte du RadioButton sélectionné
         String role = selectedRole != null ? selectedRole.getText().toLowerCase() : null;
-        System.out.println("Rôle sélectionné : " + role);  // Ajout de l'impression pour debugger
 
-        if (role == null || !(role.equals("etudiant") || !role.equals("enseignant"))) {
-            registerMessage.setText("Rôle invalide !");
-            return;
-        }
-
-        if (fullName.isEmpty() || email.isEmpty() || password.isEmpty() || role == null ) {
+        // Validation des champs
+        if (fullName.isEmpty() || email.isEmpty() || password.isEmpty() || role == null) {
             registerMessage.setText("Tous les champs doivent être remplis !");
             return;
         }
 
-        // Vérification de l'email avant de procéder à l'inscription
+        // Validation du rôle
+        if (!role.equals("etudiant") && !role.equals("enseignant")) {
+            registerMessage.setText("Rôle invalide !");
+            return;
+        }
+
+        // Vérification de l'email
         if (UtilisateurDao.isEmailExist(email)) {
             registerMessage.setText("Erreur : cet email est déjà utilisé !");
             return;
         }
 
-        if (role.equals("etudiant")) {
-            // Créer un objet StudentModel avec les valeurs
-            StudentModel nouvelEtudiant = new StudentModel(0, fullName, email, password, role);
-            boolean success = UtilisateurDao.ajouterUtilisateur(nouvelEtudiant);
+        try {
+            // Processus d'inscription
+            UserModel newUser;
+            if (role.equals("etudiant")) {
+                newUser = new StudentModel(0, fullName, email, password, role);
+            } else {
+                newUser = new TeacherModel(0, fullName, email, password, role, null);
+            }
+
+            boolean success = UtilisateurDao.ajouterUtilisateur(newUser);
 
             if (success) {
                 registerMessage.setText("Inscription réussie pour " + fullName + " !");
-            } else {
-                registerMessage.setText("Erreur lors de l'inscription !");
-            }
-        } else {
-            // Créer un objet TeacherModel avec les valeurs (id = 0 et modules = null)
-            TeacherModel nouvelEnseignant = new TeacherModel(0, fullName, email, password, role, null);
-            boolean success = UtilisateurDao.ajouterUtilisateur(nouvelEnseignant);
 
-            if (success) {
-                registerMessage.setText("Inscription réussie pour " + fullName + " !");
+                Stage currentStage = (Stage) fullNameField.getScene().getWindow();
+                currentStage.close();
+
+                if (role.equals("etudiant")) {
+                    MainApp.showStudentDashboard();
+                } else {
+                    MainApp.showTeacherDashboard();
+                }
             } else {
                 registerMessage.setText("Erreur lors de l'inscription !");
             }
+        } catch (Exception e) {
+            e.printStackTrace();
+            registerMessage.setText("Erreur système lors de l'inscription");
         }
     }
 
@@ -79,11 +89,15 @@ public class RegisterController {
     @FXML
     public void goToLogin() {
         try {
+            Stage currentStage = (Stage) registerMessage.getScene().getWindow();
+            currentStage.close();
             MainApp.showLoginView();
         } catch (Exception e) {
             e.printStackTrace();
+            registerMessage.setText("Erreur lors de l'ouverture de la connexion");
         }
     }
+
 }
 
 

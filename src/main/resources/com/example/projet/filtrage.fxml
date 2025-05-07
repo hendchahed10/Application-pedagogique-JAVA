@@ -2,71 +2,69 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
-<?import javafx.geometry.*?>
 
 <VBox xmlns="http://javafx.com/javafx/21"
       xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="com.example.projet.Controller.filtragecontroller"
 
       spacing="15"
-      style="-fx-background-color: white; -fx-padding: 20; -fx-border-color: #E0E0E0; -fx-border-width: 1; -fx-border-radius: 5;">
+      style="-fx-background-color: #E3F2FD; -fx-padding: 20; -fx-border-color: #90CAF9; -fx-border-width: 1; -fx-border-radius: 12; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 8, 0, 0, 3);">
 
     <Label text="Filtrer vos ressources "
-           style="-fx-font-weight: bold; -fx-font-size: 18; -fx-text-fill: #0D47A1; -fx-padding: 0 0 10 0;"/>
+           style="-fx-font-weight: bold; -fx-font-size: 18; -fx-text-fill: #1565C0; -fx-padding: 0 0 15 0; -fx-font-family: 'Roboto';"/>
 
-    <VBox spacing="5" style="-fx-background-color: #F5F9FF; -fx-padding: 10; -fx-border-radius: 5;">
+    <VBox spacing="10" style="-fx-background-color: #BBDEFB; -fx-padding: 15; -fx-border-radius: 12; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 5, 0, 2, 2);">
         <HBox spacing="15" alignment="CENTER_LEFT">
-            <Label text="Difficulté :" style="-fx-font-weight: bold; -fx-text-fill: #0D47A1;"/>
+            <Label text="Difficulté :" style="-fx-font-weight: bold; -fx-text-fill: #0D47A1; -fx-font-family: 'Roboto';"/>
             <RadioButton fx:id="easyRadioButton" text="Facile" toggleGroup="$difficulteGroup" userData="Facile"
-                         style="-fx-text-fill: #333333;"/>
+                         style="-fx-text-fill: #333333; -fx-font-family: 'Roboto';"/>
             <RadioButton fx:id="mediumRadioButton" text="Moyen" toggleGroup="$difficulteGroup" userData="Moyen"
-                         style="-fx-text-fill: #333333;"/>
+                         style="-fx-text-fill: #333333; -fx-font-family: 'Roboto';"/>
             <RadioButton fx:id="hardRadioButton" text="Difficile" toggleGroup="$difficulteGroup" userData="Difficile"
-                         style="-fx-text-fill: #333333;"/>
+                         style="-fx-text-fill: #333333; -fx-font-family: 'Roboto';"/>
         </HBox>
     </VBox>
 
-    <VBox spacing="5" style="-fx-background-color: #F5F9FF; -fx-padding: 10; -fx-border-radius: 5;">
+    <VBox spacing="10" style="-fx-background-color: #BBDEFB; -fx-padding: 15; -fx-border-radius: 12; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 5, 0, 2, 2);">
         <HBox spacing="15" alignment="CENTER_LEFT">
-            <Label text="Nouveauté :" style="-fx-font-weight: bold; -fx-text-fill: #0D47A1;"/>
+            <Label text="Nouveauté :" style="-fx-font-weight: bold; -fx-text-fill: #0D47A1; -fx-font-family: 'Roboto';"/>
             <RadioButton text="Ancien" toggleGroup="$nouveauteGroup" userData="Ancien"
-                         style="-fx-text-fill: #333333;"/>
+                         style="-fx-text-fill: #333333; -fx-font-family: 'Roboto';"/>
             <RadioButton text="Nouveau" toggleGroup="$nouveauteGroup" userData="Nouveau"
-                         style="-fx-text-fill: #333333;"/>
+                         style="-fx-text-fill: #333333; -fx-font-family: 'Roboto';"/>
         </HBox>
     </VBox>
 
-    <VBox spacing="5" style="-fx-background-color: #F5F9FF; -fx-padding: 10; -fx-border-radius: 5;">
+    <VBox spacing="10" style="-fx-background-color: #BBDEFB; -fx-padding: 15; -fx-border-radius: 12; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 5, 0, 2, 2);">
         <HBox spacing="15">
-            <Label text="Catégorie :" style="-fx-font-weight: bold; -fx-text-fill: #0D47A1;"/>
+            <Label text="Catégorie :" style="-fx-font-weight: bold; -fx-text-fill: #0D47A1; -fx-font-family: 'Roboto';"/>
             <RadioButton fx:id="radioInformatique" text="Informatique" toggleGroup="$categorieGroup" userData="Informatique"
-                         style="-fx-text-fill: #333333;"/>
+                         style="-fx-text-fill: #333333; -fx-font-family: 'Roboto';"/>
             <RadioButton  fx:id="radioScience" text="Science" toggleGroup="$categorieGroup" userData="Science"
-                          style="-fx-text-fill: #333333;"/>
+                          style="-fx-text-fill: #333333; -fx-font-family: 'Roboto';"/>
             <RadioButton  fx:id="radioGestion" text="Gestion" toggleGroup="$categorieGroup" userData="Gestion"
-                          style="-fx-text-fill: #333333;"/>
+                          style="-fx-text-fill: #333333; -fx-font-family: 'Roboto';"/>
         </HBox>
         <HBox spacing="15" style="-fx-padding: 5 0 0 0;">
             <RadioButton  fx:id="radioEconomie" text="Economie" toggleGroup="$categorieGroup" userData="Economie"
-                          style="-fx-text-fill: #333333;"/>
+                          style="-fx-text-fill: #333333; -fx-font-family: 'Roboto';"/>
             <RadioButton  fx:id="radioLittérature" text="Littérature" toggleGroup="$categorieGroup" userData="Littérature"
-                          style="-fx-text-fill: #333333;"/>
+                          style="-fx-text-fill: #333333; -fx-font-family: 'Roboto';"/>
             <RadioButton  fx:id="radioMathématiques" text="Mathématiques" toggleGroup="$categorieGroup" userData="Mathématiques"
-                          style="-fx-text-fill: #333333;"/>
+                          style="-fx-text-fill: #333333; -fx-font-family: 'Roboto';"/>
         </HBox>
     </VBox>
 
-    <VBox spacing="5" style="-fx-background-color: #F5F9FF; -fx-padding: 10; -fx-border-radius: 5;">
+    <VBox spacing="10" style="-fx-background-color: #BBDEFB; -fx-padding: 15; -fx-border-radius: 12; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 5, 0, 2, 2);">
         <HBox spacing="15" style="-fx-padding: 5 0 0 0;">
-            <Label text="Popularité" style="-fx-font-weight: bold; -fx-text-fill: #0D47A1;"/>
+            <Label text="Popularité" style="-fx-font-weight: bold; -fx-text-fill: #0D47A1; -fx-font-family: 'Roboto';"/>
             <RadioButton fx:id="meilleureNotee" text="Meilleure notée"
-                         style="-fx-text-fill: #333333;"/>
+                         style="-fx-text-fill: #333333; -fx-font-family: 'Roboto';"/>
         </HBox>
     </VBox>
 
     <Button fx:id="appliquerButton" text="Appliquer" onAction="#applyFilters"
-            style="-fx-font-weight: bold; -fx-font-size: 14; -fx-background-color: #0D47A1; -fx-text-fill: white; -fx-padding: 8 20; -fx-background-radius: 5;"/>
+            style="-fx-font-weight: bold; -fx-font-size: 14; -fx-background-color: #1976D2; -fx-text-fill: white; -fx-padding: 8 20; -fx-background-radius: 8; -fx-border-radius: 8; -fx-border-color: #1565C0; -fx-border-width: 1; -fx-font-family: 'Roboto';"/>
 
     <fx:define>
         <ToggleGroup fx:id="difficulteGroup"/>

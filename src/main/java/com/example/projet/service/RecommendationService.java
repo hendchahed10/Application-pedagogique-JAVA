@@ -18,7 +18,7 @@ public class RecommendationService {
     public RecommendationService() {
         try {
             System.out.println("Starting RecommendationService setup...");
-            String dbPath = "C:\\Users\\damla\\IdeaProjects\\javads22\\database.db";
+            String dbPath = "C:/IdeaProjects/Javads2/database.db";
             String csvPath = "src/main/resources/Avis.csv";
             CSVExporter.exportAvisToCSV(dbPath, csvPath);
             File ratingsFile = new File(csvPath);

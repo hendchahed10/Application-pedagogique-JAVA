@@ -6,37 +6,37 @@
 <StackPane xmlns:fx="http://javafx.com/fxml"
            fx:controller="com.example.projet.Controller.RegisterController"
            prefWidth="600" prefHeight="450"
-           style="-fx-background-color: linear-gradient(to right, #E3F2FD, #BBDEFB);">
+           style="-fx-background-color: #E3F2FD;">
 
     <VBox spacing="20" alignment="CENTER"
-          style="-fx-background-color: white; -fx-padding: 40px; -fx-background-radius: 15px; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0, 0, 4);"
+          style="-fx-background-color: #E3F2FD; -fx-padding: 40px; -fx-background-radius: 15px; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 12, 0, 0, 5); -fx-border-radius: 15; -fx-border-color: #90CAF9; -fx-border-width: 1;"
           maxWidth="400" maxHeight="500">
 
         <Label text="Inscription"
-               style="-fx-font-size: 26px; -fx-text-fill: #2196F3; -fx-font-weight: bold;"/>
+               style="-fx-font-size: 26px; -fx-text-fill: #1565C0; -fx-font-weight: bold; -fx-font-family: 'Roboto';"/>
 
         <TextField fx:id="fullNameField" promptText="Nom complet"
-                   style="-fx-font-size: 14px; -fx-pref-width: 250px; -fx-padding: 10px; -fx-background-radius: 6px; -fx-border-radius: 6px; -fx-border-color: #BBDEFB;"/>
+                   style="-fx-font-size: 14px; -fx-pref-width: 250px; -fx-padding: 10px; -fx-background-radius: 8px; -fx-border-radius: 8px; -fx-border-color: #90CAF9; -fx-border-width: 1; -fx-font-family: 'Roboto';"/>
 
         <TextField fx:id="emailField" promptText="Email"
-                   style="-fx-font-size: 14px; -fx-pref-width: 250px; -fx-padding: 10px; -fx-background-radius: 6px; -fx-border-radius: 6px; -fx-border-color: #BBDEFB;"/>
+                   style="-fx-font-size: 14px; -fx-pref-width: 250px; -fx-padding: 10px; -fx-background-radius: 8px; -fx-border-radius: 8px; -fx-border-color: #90CAF9; -fx-border-width: 1; -fx-font-family: 'Roboto';"/>
 
         <PasswordField fx:id="passwordField" promptText="Mot de passe"
-                       style="-fx-font-size: 14px; -fx-pref-width: 250px; -fx-padding: 10px; -fx-background-radius: 6px; -fx-border-radius: 6px; -fx-border-color: #BBDEFB;"/>
+                       style="-fx-font-size: 14px; -fx-pref-width: 250px; -fx-padding: 10px; -fx-background-radius: 8px; -fx-border-radius: 8px; -fx-border-color: #90CAF9; -fx-border-width: 1; -fx-font-family: 'Roboto';"/>
 
         <HBox spacing="15" alignment="CENTER">
-            <RadioButton text="Etudiant" fx:id="studentRadio" style="-fx-text-fill: #2196F3;"/>
-            <RadioButton text="Enseignant" fx:id="teacherRadio" style="-fx-text-fill: #2196F3;"/>
+            <RadioButton text="Etudiant" fx:id="studentRadio" style="-fx-text-fill: #0D47A1; -fx-font-family: 'Roboto';"/>
+            <RadioButton text="Enseignant" fx:id="teacherRadio" style="-fx-text-fill: #0D47A1; -fx-font-family: 'Roboto';"/>
         </HBox>
 
         <Button fx:id="RegisterButton" text="S'inscrire" onAction="#handleRegister"
-                style="-fx-background-color: #2196F3; -fx-text-fill: white; -fx-font-size: 15px; -fx-font-weight: bold; -fx-pref-width: 250px; -fx-background-radius: 6px; -fx-padding: 10px;"/>
+                style="-fx-background-color: #1976D2; -fx-text-fill: white; -fx-font-size: 15px; -fx-font-weight: bold; -fx-pref-width: 250px; -fx-background-radius: 8px; -fx-padding: 10px; -fx-border-radius: 8px; -fx-border-color: #1565C0; -fx-border-width: 1; -fx-font-family: 'Roboto';"/>
 
         <Label fx:id="registerMessage" text=""
-               style="-fx-text-fill: blue; -fx-font-size: 13px;"/>
+               style="-fx-text-fill: #0D47A1; -fx-font-size: 13px; -fx-font-family: 'Roboto';"/>
 
         <Hyperlink text="Vous avez déjà un compte ? Se connecter" fx:id="loginLink" onAction="#goToLogin"
-                   style="-fx-font-size: 12px; -fx-text-fill: #1976D2;"/>
+                   style="-fx-font-size: 12px; -fx-text-fill: #1976D2; -fx-font-family: 'Roboto';"/>
 
     </VBox>
 

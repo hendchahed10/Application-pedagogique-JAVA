@@ -25,7 +25,6 @@ import com.example.projet.service.CSVExporter;
 
 public class DashboardStudentController {
     private RessourceDao ressourceDao;
-    private RecommendationEngine recommendation;
     private RessourceController ressourceController;
     private UtilisateurDao utilisateurDao;
     private int currentStudentId;
@@ -104,7 +103,7 @@ public class DashboardStudentController {
                     resourceBox.setAlignment(Pos.CENTER_LEFT);
                     resourceBox.setStyle("-fx-background-color: #E3F2FD; -fx-background-radius: 15; -fx-padding: 10;");
                     Label resLabel = new Label(ressource.getTitre()
-                             );
+                    );
                     resLabel.setStyle("-fx-font-size: 14px; -fx-text-fill: #1A237E;");
                     Button detailsBtn = new Button("Consulter");
                     detailsBtn.setStyle("-fx-background-color: #2196F3; -fx-text-fill: white; -fx-cursor: hand;");

@@ -15,8 +15,8 @@ public class MainApp extends Application {
     public void start(Stage stage) {
         try {
             primaryStage = stage;
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/example/projet/login.fxml"));
-            Scene scene = new Scene(fxmlLoader.load(), 900, 700);
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/example/projet/acceuil.fxml"));
+            Scene scene = new Scene(fxmlLoader.load(), 1100, 700);
             primaryStage.setTitle("Accueil");
             primaryStage.setScene(scene);
             primaryStage.show();
@@ -26,65 +26,63 @@ public class MainApp extends Application {
         }
     }
 
-    public static void showLoginView() throws Exception {
-        FXMLLoader fxmlLoader = new FXMLLoader(MainApp.class.getResource("/com/example/projet/login.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 900, 700);
-        applyStylesheet(scene);
-        primaryStage.setTitle("Connexion");
-        primaryStage.setFullScreen(true);
-        primaryStage.setScene(scene);
-        primaryStage.show();
-    }
-
-    public static void showDstudent() throws Exception {
-        FXMLLoader fxmlLoader = new FXMLLoader(MainApp.class.getResource("/com/example/projet/dashboardStudent.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 900, 700);
-        applyStylesheet(scene);
-        primaryStage.setTitle("Connexion");
-        primaryStage.setFullScreen(true);
-        primaryStage.setScene(scene);
-        primaryStage.show();
-    }
-
-    public static void showRegisterView() throws Exception {
-        FXMLLoader fxmlLoader = new FXMLLoader(MainApp.class.getResource("/com/example/projet/register.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 900, 700);
-        applyStylesheet(scene);
-        primaryStage.setTitle("Inscription");
-        primaryStage.setScene(scene);
-        primaryStage.show();
-    }
-
-
-    public static void showView(String fxmlFile) throws IOException {
-        Parent root = FXMLLoader.load(MainApp.class.getResource("/" + fxmlFile));
-        Stage stage = new Stage();
-        stage.setScene(new Scene(root));
-        stage.show();
-    }
-
-
-
-
-    public static Stage getPrimaryStage() {
-        return primaryStage;
-    }
-
-    public static void showDashboardView() throws Exception {
-        FXMLLoader fxmlLoader = new FXMLLoader(MainApp.class.getResource("/com/example/projet/dashboardTeacher.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 900, 700);
-        applyStylesheet(scene);
-        primaryStage.setTitle("Tableau de bord");
-        primaryStage.setScene(scene);
-        primaryStage.show();
-    }
-
-    public static void applyStylesheet(Scene scene) {
-        var css = MainApp.class.getResource("/com/example/projet/style.css");
-        if (css != null) {
-            scene.getStylesheets().add(css.toExternalForm());
+    public static void showLoginView() {
+        try {
+            FXMLLoader loader = new FXMLLoader(MainApp.class.getResource("/com/example/projet/login.fxml"));
+            Parent root = loader.load();
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root, 1100, 700));
+            stage.setTitle("Connexion");
+            stage.show();
+        } catch (IOException e) {
+            System.err.println("Erreur chargement login.fxml: " + e.getMessage());
         }
     }
+
+    public static void showRegisterView() {
+        try {
+            FXMLLoader loader = new FXMLLoader(MainApp.class.getResource("/com/example/projet/register.fxml"));
+            Parent root = loader.load();
+
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root, 1100, 700));
+            stage.setTitle("Inscription");
+            stage.show();
+
+        } catch (IOException e) {
+            System.err.println("Erreur chargement register.fxml: " + e.getMessage());
+        }
+    }
+
+
+    public static void showTeacherDashboard() {
+        try {
+            FXMLLoader loader = new FXMLLoader(MainApp.class.getResource("/com/example/projet/dashboardTeacher.fxml"));
+            Parent root = loader.load();
+
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root, 1100, 700));
+            stage.setTitle("Tableau de bord Enseignant");
+            stage.show();
+        } catch (IOException e) {
+            System.err.println("Erreur chargement dashboard enseignant: " + e.getMessage());
+        }
+    }
+
+    public static void showStudentDashboard() {
+        try {
+            FXMLLoader loader = new FXMLLoader(MainApp.class.getResource("/com/example/projet/dashboardStudent.fxml"));
+            Parent root = loader.load();
+
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root, 1100, 700));
+            stage.setTitle("Tableau de bord Étudiant");
+            stage.show();
+        } catch (IOException e) {
+            System.err.println("Erreur chargement dashboard étudiant: " + e.getMessage());
+        }
+    }
+
 
     public static void main(String[] args) {
         launch(args);

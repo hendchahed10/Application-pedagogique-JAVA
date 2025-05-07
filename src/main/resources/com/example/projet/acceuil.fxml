@@ -22,8 +22,7 @@
                        -fx-border-width: 2px;
                        -fx-font-size: 14px;
                        -fx-font-weight: bold;
-                       -fx-padding: 8px 20px;
-                       -fx-cursor: hand;"
+                       -fx-padding: 8px 20px;"
                 AnchorPane.topAnchor="20.0"
                 AnchorPane.rightAnchor="20.0" />
     </AnchorPane>

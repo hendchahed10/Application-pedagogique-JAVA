@@ -17,6 +17,7 @@ import javafx.stage.Stage;
 
 
 import java.io.File;
+import java.io.IOException;
 
 public class DashboardTeacherController {
     private RessourceDao ressourceDao;
@@ -129,19 +130,6 @@ public class DashboardTeacherController {
 
 
     @FXML
-    private void handleLogout() {
-        try {
-            Parent root = FXMLLoader.load(getClass().getResource("/com/example/projet/acceuil.fxml"));
-            Stage stage = (Stage) logoutButton.getScene().getWindow();
-            stage.setScene(new Scene(root));
-            stage.show();
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.err.println("Erreur lors du chargement de la vue d'accueil.");
-        }
-    }
-
-    @FXML
     private void handleDownload(ActionEvent event) {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Télécharger le PDF");
@@ -238,6 +226,24 @@ public class DashboardTeacherController {
     public void afficherRateRessources() {
         double count =ressourceDao.getNoteMoyenRessourcesParEnseignant(currentTeacherId);
         averageRatingLabel.setText(String.valueOf(count));
+    }
+
+    @FXML
+    private void handleLogout() {
+        try {
+            Stage currentStage = (Stage) logoutButton.getScene().getWindow();
+            currentStage.close();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/projet/acceuil.fxml"));
+            Parent root = loader.load();
+            Scene scene = new Scene(root, 1100, 700);
+            Stage acceuilStage = new Stage();
+            acceuilStage.setScene(scene);
+            acceuilStage.setTitle("Accueil");
+            acceuilStage.show();
+        } catch (IOException e) {
+            System.err.println("Erreur lors du chargement de la vue d'accueil: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 
 
